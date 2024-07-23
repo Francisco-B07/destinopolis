@@ -1,0 +1,51 @@
+.card {
+  display: flex;
+  justify-content: center;
+}
+.cardContainer {
+  border-radius: 20px;
+  position: absolute;
+  width: 328px;
+  height: 160px;
+  background-color: #f2f4f6;
+  box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
+}
+.cityName {
+  font-weight: 300;
+  font-size: 40px;
+  color: #6b778d;
+  bottom: 0;
+  text-align: center;
+}
+.icon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  bottom: 85px;
+  float: right;
+  margin: 5px 20px 0 0;
+}
+.temp {
+  position: relative;
+  font-weight: 300;
+  font-size: 35px;
+  color: #17223b;
+  margin: 15px 30px;
+}
+.cardFooter {
+  background-color: #16459d;
+  color: aliceblue;
+  position: relative;
+  bottom: 70px;
+  /* left: 0px; */
+  border-radius: 0px 0px 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.tempMaxMin {
+  font-weight: 300;
+  font-size: 30px;
+  color: aliceblue;
+}
