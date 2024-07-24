@@ -1,0 +1,10 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.itmes {
+  margin: auto 0;
+  text-align: start;
+}

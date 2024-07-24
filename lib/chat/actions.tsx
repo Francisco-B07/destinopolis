@@ -1,17 +1,6 @@
 import 'server-only'
 
 import {
-  ClearDay,
-  Drizzle,
-  Fog,
-  Haze,
-  Rain,
-  Smoke,
-  Snow,
-  ThunderstormsRain
-} from '@/icons'
-
-import {
   createAI,
   createStreamableUI,
   getMutableAIState,
@@ -31,11 +20,9 @@ import {
 } from '@/components/stocks'
 
 import { z } from 'zod'
-import { EventsSkeleton } from '@/components/stocks/events-skeleton'
 import { Events } from '@/components/stocks/events'
-import { StocksSkeleton } from '@/components/stocks/stocks-skeleton'
+
 import { Stocks } from '@/components/stocks/stocks'
-import { StockSkeleton } from '@/components/stocks/stock-skeleton'
 import {
   formatNumber,
   runAsyncFnWithoutBlocking,
@@ -46,8 +33,7 @@ import { saveChat } from '@/app/actions'
 import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
 import { auth } from '@/auth'
-import WeatherCard from '@/components/weather/weather-card'
-import moment from 'moment-timezone'
+import Bento from '@/components/bento/bento'
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -145,11 +131,14 @@ async function submitUserMessage(content: string) {
 
     initial: <SpinnerMessage />,
     system: `\
-    Tu eres un bot de viajes, y le das información actualizada de clima, hora, fechas y ciudades a los usuarios.
-    Tu y el usuario pueden hablar sobre el clima, la hora, fechas y ciudades. El usuario puede obtener información actualizada de clima, hora, fechas y ciudades.
+    Como experto en viajes, hazme una lista de los lugares que debo visitar en mi viaje. 
+    Debes dividirme los sitios que puedo ver en la cantidad de días que tengo para visitarlos.
+    Organizame las visitas por día y por zona, de manera que estén unas cerca de otras cuando
+    las visite en el mismo día.
 
-    Si el usuario pide una hora actual de una ciudad en particular, llama a \'show_time\' para obtener la hora actual de esa ciudad.
-    Si el usuario pide información actualizada de clima, llama a \'show_weather\' para obtener la información actualizada de clima.
+    Si el usuario pide una lista de lugares que debe visitar en su viaje, 
+    responde con una lista de lugares que debe visitar en su viaje y luego
+    llama a \'list_locations\' .    
     
     `,
     messages: [
@@ -185,92 +174,88 @@ async function submitUserMessage(content: string) {
       return textNode
     },
     tools: {
-      show_weather: {
+      list_locations: {
         description:
-          'Obtiene la información actualizada de clima de una ciudad.',
+          'Obtiene la lista de lugares que debo visitar en mi viaje.',
         parameters: z.object({
-          location: z.string().describe(
+          locationWeather: z.string().describe(
             `Este es el nombre de la ciudad que se quiere obtener la información actualizada de clima. 
               Te van a pasar el nombre de una ciudad y lo debes convertir a Nombre de la ciudad y código del país divididos por coma 
               (utilice códigos de país ISO 3166). 
               Por ejemplo, si quieres obtener la información actualizada de clima de Londres, debes pasar "London,uk".
               `
-          )
-        }),
-        generate: async function* ({ location }) {
-          yield (
-            <div>
-              <h3>Loading...</h3>
-            </div>
-          )
-
-          const toolCallId = nanoid()
-
-          const res = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${location}&lang=es&units=metric&APPID=${process.env.WEATHER_API_KEY}`
-          )
-          const data = await res.json()
-          const { temp, temp_min, temp_max } = data.main
-          const city = data.name
-          const icon = data.weather[0].main
-
-          aiState.done({
-            ...aiState.get(),
-            messages: [
-              ...aiState.get().messages,
-              {
-                id: nanoid(),
-                role: 'assistant',
-                content: [
-                  {
-                    type: 'tool-call',
-                    toolName: 'show_weather',
-                    toolCallId,
-                    args: { location }
-                  }
-                ]
-              },
-              {
-                id: nanoid(),
-                role: 'tool',
-                content: [
-                  {
-                    type: 'tool-result',
-                    toolName: 'show_weather',
-                    toolCallId,
-                    result: location
-                  }
-                ]
-              }
-            ]
-          })
-
-          return (
-            <WeatherCard
-              city={city}
-              temp={temp}
-              temp_min={temp_min}
-              temp_max={temp_max}
-              icon={icon}
-            />
-          )
-        }
-      },
-      show_time: {
-        description:
-          'Obtiene la información actualizada de la hora de una ciudad.',
-        parameters: z.object({
+          ),
           locationTime: z.string().describe(
             `Este es el nombre de la ciudad que se quiere obtener la hora actual.
             Te van a pasar el nombre de una ciudad y debes añadir el timezone de la ciudad.
             Por ejemplo,si te pasan "Nueva York" va a ser America/New_York,
             Lima es America/Lima, España es Europe/Madrid, etc.
               `
-          )
-        }),
-        generate: async function* ({ locationTime }) {
-          console.log(locationTime)
+          ),
+          cronograma: z
+            .array(
+              z.object({
+                día: z.number(),
+                lugares: z.array(
+                  z.object({
+                    nombre: z.string(),
+                    coordenadas: z.object({
+                      latitud: z.number(),
+                      longitud: z.number()
+                    })
+                  })
+                )
+              })
+            )
+            .describe(
+              `
+            Planifica un itinerario de viaje para la cantidad de dias especificado por el usuario
+            y en la ciudad especificada por el usuario. 
+            Organiza las visitas de manera que estén agrupadas por zonas, 
+            de modo que los lugares cercanos entre sí se visiten el mismo día. 
+            Para cada día, proporciona una lista de lugares con el nombre del lugar 
+            y las coordenadas exactas (latitud y longitud). 
+            El itinerario debe estar equilibrado en términos de tiempo y cantidad de visitas por día. 
 
+            El resultado debe estar en un array de objetos, 
+            con cada objeto representando un día y conteniendo una lista de lugares.
+
+            Ejemplo de salida:
+
+            [
+                {
+                    "día": 1,
+                    "lugares": [
+                        {"nombre": "Parque de Mayo", "coordenadas": {"latitud": -31.527050, "longitud": -68.521380}},
+                        {"nombre": "Museo Provincial de Bellas Artes Franklin Rawson", "coordenadas": {"latitud": -31.532120, "longitud": -68.523380}},
+                        {"nombre": "Catedral de San Juan", "coordenadas": {"latitud": -31.537320, "longitud": -68.522180}}
+                    ]
+                },
+                {
+                    "día": 2,
+                    "lugares": [
+                        {"nombre": "Bodega Merced del Estero", "coordenadas": {"latitud": -31.531530, "longitud": -68.548520}},
+                        {"nombre": "Finca Sierras Azules", "coordenadas": {"latitud": -31.550230, "longitud": -68.555330}},
+                        {"nombre": "Museo de la Memoria Urbana", "coordenadas": {"latitud": -31.535050, "longitud": -68.519710}}
+                    ]
+                },
+                {
+                    "día": 3,
+                    "lugares": [
+                        {"nombre": "Dique de Ullum", "coordenadas": {"latitud": -31.454960, "longitud": -68.663200}},
+                        {"nombre": "Loma de las Tapias", "coordenadas": {"latitud": -31.447980, "longitud": -68.687330}},
+                        {"nombre": "Parque Faunístico", "coordenadas": {"latitud": -31.466670, "longitud": -68.671670}}
+                    ]
+                }
+            ]
+              `
+            )
+        }),
+        generate: async function* ({
+          locationWeather,
+          locationTime,
+          cronograma
+        }) {
           yield (
             <div>
               <h3>Loading...</h3>
@@ -278,12 +263,6 @@ async function submitUserMessage(content: string) {
           )
 
           const toolCallId = nanoid()
-
-          const res = await fetch(
-            `https://worldtimeapi.org/api/timezone/${locationTime}`
-          )
-          const { datetime } = await res.json()
-          const time = moment.tz(datetime, locationTime).format('h:mmA')
 
           aiState.done({
             ...aiState.get(),
@@ -295,9 +274,9 @@ async function submitUserMessage(content: string) {
                 content: [
                   {
                     type: 'tool-call',
-                    toolName: 'show_weather',
+                    toolName: 'list_locations',
                     toolCallId,
-                    args: { locationTime }
+                    args: { locationWeather, locationTime, cronograma }
                   }
                 ]
               },
@@ -307,9 +286,9 @@ async function submitUserMessage(content: string) {
                 content: [
                   {
                     type: 'tool-result',
-                    toolName: 'show_weather',
+                    toolName: 'list_locations',
                     toolCallId,
-                    result: locationTime
+                    result: locationWeather
                   }
                 ]
               }
@@ -317,14 +296,84 @@ async function submitUserMessage(content: string) {
           })
 
           return (
-            <div>
-              <h1>
-                La hora actual de {locationTime} es {time}
-              </h1>
-            </div>
+            <Bento
+              locationWeather={locationWeather}
+              locationTime={locationTime}
+              cronograma={cronograma}
+            />
           )
         }
       }
+
+      // show_time: {
+      //   description:
+      //     'Obtiene la información actualizada de la hora de una ciudad.',
+      //   parameters: z.object({
+      //     locationTime: z.string().describe(
+      //       `Este es el nombre de la ciudad que se quiere obtener la hora actual.
+      //       Te van a pasar el nombre de una ciudad y debes añadir el timezone de la ciudad.
+      //       Por ejemplo,si te pasan "Nueva York" va a ser America/New_York,
+      //       Lima es America/Lima, España es Europe/Madrid, etc.
+      //         `
+      //     )
+      //   }),
+      //   generate: async function* ({ locationTime }) {
+      //     console.log(locationTime)
+
+      //     yield (
+      //       <div>
+      //         <h3>Loading...</h3>
+      //       </div>
+      //     )
+
+      //     const toolCallId = nanoid()
+
+      //     const res = await fetch(
+      //       `https://worldtimeapi.org/api/timezone/${locationTime}`
+      //     )
+      //     const { datetime } = await res.json()
+      //     const time = moment.tz(datetime, locationTime).format('h:mmA')
+
+      //     aiState.done({
+      //       ...aiState.get(),
+      //       messages: [
+      //         ...aiState.get().messages,
+      //         {
+      //           id: nanoid(),
+      //           role: 'assistant',
+      //           content: [
+      //             {
+      //               type: 'tool-call',
+      //               toolName: 'show_weather',
+      //               toolCallId,
+      //               args: { locationTime }
+      //             }
+      //           ]
+      //         },
+      //         {
+      //           id: nanoid(),
+      //           role: 'tool',
+      //           content: [
+      //             {
+      //               type: 'tool-result',
+      //               toolName: 'show_weather',
+      //               toolCallId,
+      //               result: locationTime
+      //             }
+      //           ]
+      //         }
+      //       ]
+      //     })
+
+      //     return (
+      //       <div>
+      //         <h1>
+      //           La hora actual de {locationTime} es {time}
+      //         </h1>
+      //       </div>
+      //     )
+      //   }
+      // }
     }
   })
 

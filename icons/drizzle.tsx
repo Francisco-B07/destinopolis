@@ -14,9 +14,9 @@ export const Drizzle = ({ className }: Props) => {
           y2="50.8"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#f3f7fe" />
-          <stop offset="0.45" stop-color="#f3f7fe" />
-          <stop offset="1" stop-color="#deeafb" />
+          <stop offset="0" stopColor="#f3f7fe" />
+          <stop offset="0.45" stopColor="#f3f7fe" />
+          <stop offset="1" stopColor="#deeafb" />
         </linearGradient>
         <linearGradient
           id="b"
@@ -26,9 +26,9 @@ export const Drizzle = ({ className }: Props) => {
           y2="46.7"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#4286ee" />
-          <stop offset="0.45" stop-color="#4286ee" />
-          <stop offset="1" stop-color="#0950bc" />
+          <stop offset="0" stopColor="#4286ee" />
+          <stop offset="0.45" stopColor="#4286ee" />
+          <stop offset="1" stopColor="#0950bc" />
         </linearGradient>
         <linearGradient id="c" x1="30.31" y1="44.3" x2="31.69" y2="46.7" />
         <linearGradient id="d" x1="37.31" y1="44.3" x2="38.69" y2="46.7" />
@@ -36,8 +36,8 @@ export const Drizzle = ({ className }: Props) => {
       <path
         d="M46.5,31.5l-.32,0a10.49,10.49,0,0,0-19.11-8,7,7,0,0,0-10.57,6,7.21,7.21,0,0,0,.1,1.14A7.5,7.5,0,0,0,18,45.5a4.19,4.19,0,0,0,.5,0v0h28a7,7,0,0,0,0-14Z"
         stroke="#e6effc"
-        stroke-miterlimit="10"
-        stroke-width="0.5"
+        strokeMiterlimit="10"
+        strokeWidth="0.5"
         fill="url(#a)"
       />
       <line
@@ -46,9 +46,9 @@ export const Drizzle = ({ className }: Props) => {
         x2="23.92"
         y2="45.99"
         fill="none"
-        stroke-linecap="round"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         stroke="url(#c)"
       >
         <animateTransform
@@ -71,9 +71,9 @@ export const Drizzle = ({ className }: Props) => {
         x2="30.92"
         y2="45.99"
         fill="none"
-        stroke-linecap="round"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         stroke="url(#d)"
       >
         <animateTransform
@@ -98,9 +98,9 @@ export const Drizzle = ({ className }: Props) => {
         x2="37.92"
         y2="45.99"
         fill="none"
-        stroke-linecap="round"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="2"
         stroke="url(#e)"
       >
         <animateTransform
