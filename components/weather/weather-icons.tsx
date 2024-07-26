@@ -14,7 +14,7 @@ interface Props {
   className?: string
 }
 
-const Icons = ({ icon, className }: Props) => {
+const WeatherIcons = ({ icon, className }: Props) => {
   switch (icon) {
     case 'Thunderstorm':
       return <ThunderstormsRain className={className} />
@@ -46,4 +46,4 @@ const Icons = ({ icon, className }: Props) => {
   }
 }
 
-export default Icons
+export default WeatherIcons

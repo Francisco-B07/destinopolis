@@ -178,6 +178,12 @@ async function submitUserMessage(content: string) {
         description:
           'Obtiene la lista de lugares que debo visitar en mi viaje.',
         parameters: z.object({
+          location: z.string().describe(
+            `Este es el nombre de la ciudad a la cual se desea realizar el viaje. 
+              Te van a pasar el nombre de una ciudad y lo debes convertir en coordenadas.
+              Por ejemplo, si quiere ir a Manhattan (Nueva York), debes pasar "40.7307999,-73.9973085".
+              `
+          ),
           locationWeather: z.string().describe(
             `Este es el nombre de la ciudad que se quiere obtener la información actualizada de clima. 
               Te van a pasar el nombre de una ciudad y lo debes convertir a Nombre de la ciudad y código del país divididos por coma 
@@ -198,60 +204,69 @@ async function submitUserMessage(content: string) {
                 día: z.number(),
                 lugares: z.array(
                   z.object({
-                    nombre: z.string(),
-                    coordenadas: z.object({
-                      latitud: z.number(),
-                      longitud: z.number()
-                    })
+                    nombre: z.string()
                   })
                 )
               })
             )
             .describe(
+              //   `
+              // Planifica un itinerario de viaje detallado para la ciudad y la cantidad de días
+              // especificados por el usuario. Organiza las visitas agrupando los lugares cercanos entre sí
+              // para que se visiten el mismo día. Asegúrate de equilibrar el itinerario en términos de tiempo
+              // y número de visitas por día.
+
+              // El resultado debe ser un array de objetos, donde cada objeto representa un día del itinerario y contiene dos propiedades:
+              // 1. 'día': un número que indica el día del cronograma.
+              // 2. 'lugares': un array de objetos, cada uno con el nombre de un lugar a visitar.
+
+              // Ejemplo de salida esperada:
+              // [
+              //     {
+              //         "día": 1,
+              //         "lugares": [
+              //             {"nombre": "Museo del Prado"},
+              //             {"nombre": "Parque del Retiro"}
+              //         ]
+              //     },
+              //     {
+              //         "día": 2,
+              //         "lugares": [
+              //             {"nombre": "Plaza Mayor"},
+              //             {"nombre": "Palacio Real"}
+              //         ]
+              //     }
+              // ]
+              //   `
               `
-            Planifica un itinerario de viaje para la cantidad de dias especificado por el usuario
-            y en la ciudad especificada por el usuario. 
-            Organiza las visitas de manera que estén agrupadas por zonas, 
-            de modo que los lugares cercanos entre sí se visiten el mismo día. 
-            Para cada día, proporciona una lista de lugares con el nombre del lugar 
-            y las coordenadas exactas (latitud y longitud). 
-            El itinerario debe estar equilibrado en términos de tiempo y cantidad de visitas por día. 
+            Plan a detailed travel itinerary for the city and number of days specified by the user. Organize the visits by grouping nearby places to be visited on the same day. Ensure the itinerary is balanced in terms of time and the number of visits per day.
 
-            El resultado debe estar en un array de objetos, 
-            con cada objeto representando un día y conteniendo una lista de lugares.
+            The result should be an array of objects, where each object represents a day of the itinerary and contains two properties:
+            1. 'day': a number indicating the corresponding day of the schedule.
+            2. 'places': an array of objects, each containing the name of a place to visit.
 
-            Ejemplo de salida:
-
+            Expected output example:
             [
                 {
-                    "día": 1,
-                    "lugares": [
-                        {"nombre": "Parque de Mayo", "coordenadas": {"latitud": -31.527050, "longitud": -68.521380}},
-                        {"nombre": "Museo Provincial de Bellas Artes Franklin Rawson", "coordenadas": {"latitud": -31.532120, "longitud": -68.523380}},
-                        {"nombre": "Catedral de San Juan", "coordenadas": {"latitud": -31.537320, "longitud": -68.522180}}
+                    "day": 1,
+                    "places": [
+                        {"name": "Prado Museum"},
+                        {"name": "Retiro Park"}
                     ]
                 },
                 {
-                    "día": 2,
-                    "lugares": [
-                        {"nombre": "Bodega Merced del Estero", "coordenadas": {"latitud": -31.531530, "longitud": -68.548520}},
-                        {"nombre": "Finca Sierras Azules", "coordenadas": {"latitud": -31.550230, "longitud": -68.555330}},
-                        {"nombre": "Museo de la Memoria Urbana", "coordenadas": {"latitud": -31.535050, "longitud": -68.519710}}
-                    ]
-                },
-                {
-                    "día": 3,
-                    "lugares": [
-                        {"nombre": "Dique de Ullum", "coordenadas": {"latitud": -31.454960, "longitud": -68.663200}},
-                        {"nombre": "Loma de las Tapias", "coordenadas": {"latitud": -31.447980, "longitud": -68.687330}},
-                        {"nombre": "Parque Faunístico", "coordenadas": {"latitud": -31.466670, "longitud": -68.671670}}
+                    "day": 2,
+                    "places": [
+                        {"name": "Plaza Mayor"},
+                        {"name": "Royal Palace"}
                     ]
                 }
             ]
-              `
+            `
             )
         }),
         generate: async function* ({
+          location,
           locationWeather,
           locationTime,
           cronograma
@@ -263,6 +278,8 @@ async function submitUserMessage(content: string) {
           )
 
           const toolCallId = nanoid()
+
+          console.log('location', location)
 
           aiState.done({
             ...aiState.get(),
@@ -276,7 +293,12 @@ async function submitUserMessage(content: string) {
                     type: 'tool-call',
                     toolName: 'list_locations',
                     toolCallId,
-                    args: { locationWeather, locationTime, cronograma }
+                    args: {
+                      location,
+                      locationWeather,
+                      locationTime,
+                      cronograma
+                    }
                   }
                 ]
               },
@@ -300,6 +322,7 @@ async function submitUserMessage(content: string) {
               locationWeather={locationWeather}
               locationTime={locationTime}
               cronograma={cronograma}
+              location={location}
             />
           )
         }

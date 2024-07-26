@@ -1,0 +1,66 @@
+.transitContainer {
+  display: flex;
+  flex-direction: column;
+}
+.transitSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 5px 10px;
+}
+
+.transitSeparator {
+  width: 2px;
+  height: 60px;
+  background-color: white;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 15px;
+}
+.transitPlace {
+  font-size: 16px;
+}
+
+.transitPlaceArrival {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  text-align: start;
+  margin-left: 9px;
+  height: 15px;
+}
+
+.transitPlaceArrivalName {
+  width: 70px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.transitPlaceArrivalName:hover {
+  cursor: pointer;
+  position: absolute;
+  width: 110px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  z-index: 10;
+  background-color: rgba(32, 32, 32, 0.9);
+  padding: 6px;
+  margin-left: 8px;
+}
+
+.transitCircle {
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  background-color: white;
+}
+
+.transitAttributions {
+  font-size: 10px;
+}

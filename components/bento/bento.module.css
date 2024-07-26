@@ -17,6 +17,7 @@
   display: flex;
   font-size: 1.2em;
   text-align: center;
+  padding: 15px 5px;
 }
 
 .item1 {
@@ -41,11 +42,5 @@
   grid-area: 1 / 10 / 2 / 13;
 }
 .item8 {
-  grid-area: 2 / 10 / 4 / 13;
-}
-.item9 {
-  grid-area: 4 / 10 / 5 / 13;
-}
-.item10 {
-  grid-area: 5 / 10 / 6 / 13;
+  grid-area: 2 / 10 / 6 / 13;
 }

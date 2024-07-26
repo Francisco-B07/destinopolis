@@ -1,4 +1,4 @@
-import Icons from '@/components/weather/icons'
+import WeatherIcons from '@/components/weather/weather-icons'
 import styles from './weather-card.module.css'
 interface Props {
   city: string
@@ -12,11 +12,9 @@ export const WeatherCard = ({ city, temp, icon }: Props) => {
       <div className={styles.cardFooter}>
         <p className={styles.temp}>{temp.toFixed(0)}&deg;</p>
         <div className={styles.icon}>
-          <Icons icon={icon} />
+          <WeatherIcons icon={icon} />
         </div>
       </div>
     </div>
   )
 }
-
-// export default WeatherCard

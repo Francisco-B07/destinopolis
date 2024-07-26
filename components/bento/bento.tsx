@@ -1,4 +1,4 @@
-import { Cronograma, Time, WeatherCard } from '@/components/index'
+import { Cronograma, Time, TravelInCity, WeatherCard } from '@/components/index'
 import styles from './bento.module.css'
 import { actionsTime, actionsWeather } from '@/actions'
 import type { Itinerario } from '@/interfaces'
@@ -7,8 +7,14 @@ interface Props {
   locationWeather: string
   locationTime: string
   cronograma: Itinerario
+  location: string
 }
-const Bento = async ({ locationWeather, locationTime, cronograma }: Props) => {
+const Bento = async ({
+  locationWeather,
+  locationTime,
+  cronograma,
+  location
+}: Props) => {
   const weather = await actionsWeather(locationWeather)
   const time = await actionsTime(locationTime)
   return (
@@ -32,9 +38,9 @@ const Bento = async ({ locationWeather, locationTime, cronograma }: Props) => {
         <Cronograma cronograma={cronograma} />
       </div>
       <div className={`${styles.bentoItem} ${styles.item7}`}>Mapa</div>
-      <div className={`${styles.bentoItem} ${styles.item8}`}>Traslado</div>
-      <div className={`${styles.bentoItem} ${styles.item9}`}> Costo</div>
-      <div className={`${styles.bentoItem} ${styles.item10}`}>PDF</div>
+      <div className={`${styles.bentoItem} ${styles.item8}`}>
+        <TravelInCity cronograma={cronograma} location={location} />
+      </div>
     </div>
   )
 }

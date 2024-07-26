@@ -1,12 +1,5 @@
-// Types
-type Coordenadas = {
-  latitud: number
-  longitud: number
-}
-
 type Lugar = {
   nombre: string
-  coordenadas: Coordenadas
 }
 
 type Dia = {
