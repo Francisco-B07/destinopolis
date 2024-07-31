@@ -7,10 +7,8 @@ interface Props {
 }
 
 export const Cronograma = ({ cronograma }: Props) => {
-  console.log(cronograma[0].lugares)
-
   return (
-    <div>
+    <div className={styles.containerCronograma}>
       {cronograma[0].lugares.map((item, index) => {
         return (
           <div key={index} className={styles.cardContainer}>

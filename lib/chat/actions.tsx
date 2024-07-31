@@ -34,6 +34,9 @@ import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
 import { auth } from '@/auth'
 import Bento from '@/components/bento/bento'
+import { actionsTime, actionsWeather } from '@/actions'
+import { actionsTransitArray } from '@/actions/transit/actions-transit-array'
+import { Transites } from '@/interfaces'
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -265,12 +268,7 @@ async function submitUserMessage(content: string) {
             `
             )
         }),
-        generate: async function* ({
-          location,
-          locationWeather,
-          locationTime,
-          cronograma
-        }) {
+        generate: async function* ({ location, locationWeather, cronograma }) {
           yield (
             <div>
               <h3>Loading...</h3>
@@ -279,7 +277,12 @@ async function submitUserMessage(content: string) {
 
           const toolCallId = nanoid()
 
-          console.log('location', location)
+          // const time = await actionsTime(locationTime)
+          const weather = await actionsWeather(locationWeather)
+          const transites = await actionsTransitArray({
+            cronograma,
+            location
+          })
 
           aiState.done({
             ...aiState.get(),
@@ -294,10 +297,9 @@ async function submitUserMessage(content: string) {
                     toolName: 'list_locations',
                     toolCallId,
                     args: {
-                      location,
-                      locationWeather,
-                      locationTime,
-                      cronograma
+                      weather,
+                      cronograma,
+                      transites
                     }
                   }
                 ]
@@ -310,7 +312,7 @@ async function submitUserMessage(content: string) {
                     type: 'tool-result',
                     toolName: 'list_locations',
                     toolCallId,
-                    result: locationWeather
+                    result: location
                   }
                 ]
               }
@@ -319,10 +321,9 @@ async function submitUserMessage(content: string) {
 
           return (
             <Bento
-              locationWeather={locationWeather}
-              locationTime={locationTime}
+              weather={weather}
               cronograma={cronograma}
-              location={location}
+              transites={transites}
             />
           )
         }

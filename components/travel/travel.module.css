@@ -1,6 +1,28 @@
+.container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.destinos {
+  width: 440px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.destino {
+  font-size: 16px;
+  border: 1px solid #e28708;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+  background-color: #c0750d;
+  /* max-width: 100px; */
+}
 .transitContainer {
   display: flex;
   flex-direction: column;
+  width: 80%;
 }
 .transitSection {
   display: flex;
@@ -13,7 +35,7 @@
 
 .transitSeparator {
   width: 2px;
-  height: 60px;
+  height: 40px;
   background-color: white;
   margin-top: 6px;
   margin-bottom: 6px;
@@ -28,28 +50,30 @@
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
+  font-size: 12px;
   text-align: start;
   margin-left: 9px;
   height: 15px;
 }
 
 .transitPlaceArrivalName {
-  width: 70px;
+  width: 180px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgb(15, 15, 15);
+  font-weight: bold;
 }
 
 .transitPlaceArrivalName:hover {
   cursor: pointer;
   position: absolute;
-  width: 110px;
+  width: 250px;
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
   z-index: 10;
-  background-color: rgba(32, 32, 32, 0.9);
+  /* background-color: rgba(32, 32, 32, 0.9); */
   padding: 6px;
   margin-left: 8px;
 }

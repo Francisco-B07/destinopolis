@@ -3,6 +3,7 @@ import { UIState } from '@/lib/chat/actions'
 import { Session } from '@/lib/types'
 import Link from 'next/link'
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import Bento from './bento/bento'
 
 export interface ChatList {
   messages: UIState

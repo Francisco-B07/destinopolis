@@ -11,14 +11,6 @@ interface Props {
 export const TransitInfoLine = ({ section }: Props) => {
   return (
     <div className={styles.transitInfo}>
-      {section.transport?.headsign && (
-        <div className={styles.transitHeadsign}>
-          <IconMapPin />
-          <span className={styles.transitHeadsignText}>
-            {section.transport?.headsign}
-          </span>
-        </div>
-      )}
       <div className={styles.transitInfoLine}>
         <div className={styles.transitSectionIcons}>
           <p className={styles.transitName}>{section.transport?.name}</p>
@@ -32,6 +24,14 @@ export const TransitInfoLine = ({ section }: Props) => {
             style={{ color: section.transport?.color }}
           />
         </div>
+        {section.transport?.headsign && (
+          <div className={styles.transitHeadsign}>
+            <IconMapPin />
+            <span className={styles.transitHeadsignText}>
+              {section.transport?.headsign}
+            </span>
+          </div>
+        )}
         <TimeDiff
           time1={section.departure.time}
           time2={section.arrival.time}
