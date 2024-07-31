@@ -194,13 +194,13 @@ async function submitUserMessage(content: string) {
               Por ejemplo, si quieres obtener la información actualizada de clima de Londres, debes pasar "London,uk".
               `
           ),
-          locationTime: z.string().describe(
-            `Este es el nombre de la ciudad que se quiere obtener la hora actual.
-            Te van a pasar el nombre de una ciudad y debes añadir el timezone de la ciudad.
-            Por ejemplo,si te pasan "Nueva York" va a ser America/New_York,
-            Lima es America/Lima, España es Europe/Madrid, etc.
-              `
-          ),
+          // locationTime: z.string().describe(
+          //   `Este es el nombre de la ciudad que se quiere obtener la hora actual.
+          //   Te van a pasar el nombre de una ciudad y debes añadir el timezone de la ciudad.
+          //   Por ejemplo,si te pasan "Nueva York" va a ser America/New_York,
+          //   Lima es America/Lima, España es Europe/Madrid, etc.
+          //     `
+          // ),
           cronograma: z
             .array(
               z.object({
@@ -279,10 +279,18 @@ async function submitUserMessage(content: string) {
 
           // const time = await actionsTime(locationTime)
           const weather = await actionsWeather(locationWeather)
-          const transites = await actionsTransitArray({
+          const transitesPromises = await actionsTransitArray({
             cronograma,
             location
           })
+
+          const results = await Promise.allSettled(transitesPromises)
+          const transites: Transites[] = results
+            .filter(result => result.status === 'fulfilled')
+            .map(result => (result as PromiseFulfilledResult<Transites>).value)
+            .filter(item => item !== null) as Transites[]
+
+          console.log('transites desde el actions', transites)
 
           aiState.done({
             ...aiState.get(),

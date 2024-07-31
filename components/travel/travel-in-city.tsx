@@ -11,19 +11,23 @@ export const TravelInCity = ({ transites }: Props) => {
   console.log('transitesInCity', transites)
   return (
     <div className={styles.container}>
-      <div>
+      <div className={styles.allDestinos}>
         {transites.map((item, index) => (
-          <div key={index} className={styles.destinos}>
+          <div
+            key={index}
+            style={
+              item.dia === 1 ? { display: 'initial' } : { display: 'none' }
+            }
+          >
             <div>
-              {item.dia === 1 && (
-                <span className={styles.destino}>{item.origin} </span>
-              )}
+              <span className={styles.destino}>{item.origin} </span>
             </div>
-            <div>
-              {index === transites.length - 1 && (
+
+            {index === transites.length - 1 && (
+              <div>
                 <span className={styles.destino}>{item.destination}</span>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
