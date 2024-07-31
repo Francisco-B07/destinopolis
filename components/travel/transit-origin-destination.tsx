@@ -8,7 +8,9 @@ interface Props {
 
 export const TransitOriginDestination = ({ transit }: Props) => {
   return (
-    <div>
+    <div
+      className={`${styles.containerTransitOriginDestination} custom-scrollbar`}
+    >
       {transit.routes[0].sections.map((section, index) => {
         return (
           <div key={index} className={styles.transitContainer}>

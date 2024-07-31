@@ -74,3 +74,26 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #dbdbdb;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(202 138 4 / 0.95);
+  border-radius: 3px;
+  background: linear-gradient(
+    45deg,
+    rgb(234, 179, 8) 0%,
+    rgba(217, 158, 6, 0.95) 50%,
+    rgba(202, 138, 4, 0.85) 100%
+  );
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}

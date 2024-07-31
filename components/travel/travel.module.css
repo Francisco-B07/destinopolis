@@ -3,21 +3,51 @@
   display: flex;
   flex-direction: column;
 }
+.containerAllD {
+  display: flex;
+  justify-content: space-around;
+  max-width: 420px;
+}
+.dia {
+  font-size: 12px;
+  border: 2px solid #c57c15;
+  border-radius: 10px;
+  padding: 5px 20px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.selected {
+  font-size: 13px;
+  font-weight: bold;
+  color: rgb(15, 15, 15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .allDestinos {
-  width: 430px;
+  width: 400px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
 }
 
 .destino {
-  font-size: 16px;
-  border: 1px solid #e28708;
+  font-size: 12px;
+  border: 2px solid #c57c15;
+  /* background-color: #da8918; */
   border-radius: 10px;
-  padding: 10px;
+  padding: 5px 10px;
   color: white;
-  background-color: rgb(202 138 4 / 0.8);
+  cursor: pointer;
+  max-width: 120px;
+  max-height: 50px;
+  margin-left: 20px;
+}
+
+.destino:hover {
+  background-color: green;
 }
 .transitContainer {
   display: flex;
@@ -69,15 +99,12 @@
 
 .transitPlaceArrivalName:hover {
   cursor: pointer;
-  position: absolute;
+  position: relative;
   width: 250px;
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
   z-index: 10;
-  /* background-color: rgba(32, 32, 32, 0.9); */
-  padding: 6px;
-  margin-left: 8px;
 }
 
 .transitCircle {
@@ -89,4 +116,11 @@
 
 .transitAttributions {
   font-size: 10px;
+}
+
+.containerTransitOriginDestination {
+  margin-top: 12px;
+  overflow-y: auto;
+  max-height: 170px;
+  max-width: 400px;
 }

@@ -15,7 +15,7 @@
 }
 
 .transitHeadsignText {
-  width: 120px;
+  width: 150px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -25,14 +25,12 @@
 
 .transitHeadsignText:hover {
   cursor: pointer;
-  position: absolute;
-  width: 150px;
+  position: relative;
+  width: 200px;
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
   z-index: 10;
-  margin-left: 10px;
-  padding: 10px;
   font-size: 12px;
 }
 
