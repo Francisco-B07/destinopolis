@@ -97,3 +97,25 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: transparent;
 }
+
+/* ----------------- */
+.dias-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dias-scrollbar::-webkit-scrollbar-track {
+  background: #dbdbdb;
+  margin-left: 60px;
+}
+
+.dias-scrollbar::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background: rgb(202 138 4 / 0.95);
+  border-radius: 3px;
+  background: linear-gradient(
+    45deg,
+    rgb(224, 169, 8) 0%,
+    rgba(217, 158, 6, 0.95) 50%,
+    rgba(202, 138, 4, 0.85) 100%
+  );
+}

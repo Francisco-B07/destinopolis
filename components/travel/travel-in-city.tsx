@@ -10,6 +10,7 @@ interface Props {
 
 export const TravelInCity = ({ transites }: Props) => {
   const [placeToGo, setPlaceToGo] = useState(transites[0].destination)
+  const [startTour, setStartTour] = useState(transites[0].origin)
   const [currentDia, setCurrentDia] = useState(1)
 
   const cantidadDeVisitas = transites.length
@@ -18,12 +19,10 @@ export const TravelInCity = ({ transites }: Props) => {
     (v, i) => i + 1
   )
 
-  console.log(dias)
-
   return (
     <div className={styles.container}>
-      <div className={styles.containerAllD}>
-        <p className={styles.selected} style={{ marginRight: '30px' }}>
+      <div className={`${styles.containerAllD} dias-scrollbar`}>
+        <p className={styles.subtitle} style={{ marginRight: '30px' }}>
           Día:
         </p>
         {dias.map((dia, index) => (
@@ -42,15 +41,27 @@ export const TravelInCity = ({ transites }: Props) => {
               )
 
               setPlaceToGo(firstElement!.destination)
+              setStartTour(firstElement!.origin)
             }}
           >
             {dia}{' '}
           </button>
         ))}
       </div>
-      <div className={styles.containerAllD}>
-        <p className={styles.selected}>Destino:</p>
+      <div className={`${styles.containerAllD} dias-scrollbar`}>
+        <p className={styles.subtitle}>Destino:</p>
         <div className={styles.allDestinos}>
+          <button
+            className={styles.destino}
+            style={
+              startTour === placeToGo
+                ? { backgroundColor: 'green' }
+                : { backgroundColor: 'rgba(202, 138, 4, 0.85)' }
+            }
+            onClick={() => setPlaceToGo(startTour)}
+          >
+            {startTour}
+          </button>
           {transites.map((item, index) => (
             <div
               key={index}
@@ -63,29 +74,14 @@ export const TravelInCity = ({ transites }: Props) => {
               <button
                 className={styles.destino}
                 style={
-                  item.origin === placeToGo
+                  item.destination === placeToGo
                     ? { backgroundColor: 'green' }
                     : { backgroundColor: 'rgba(202, 138, 4, 0.85)' }
                 }
-                onClick={() => setPlaceToGo(item.origin)}
+                onClick={() => setPlaceToGo(item.destination)}
               >
-                {item.origin}{' '}
+                {item.destination}{' '}
               </button>
-              <div>
-                {index === cantidadDeVisitas - 1 && (
-                  <button
-                    className={styles.destino}
-                    style={
-                      item.destination === placeToGo
-                        ? { backgroundColor: 'green' }
-                        : { backgroundColor: 'rgba(202, 138, 4, 0.85)' }
-                    }
-                    onClick={() => setPlaceToGo(item.destination)}
-                  >
-                    {item.destination}
-                  </button>
-                )}
-              </div>
             </div>
           ))}
         </div>
@@ -98,6 +94,13 @@ export const TravelInCity = ({ transites }: Props) => {
                 <TransitOriginDestination transit={item.transit} />
               </div>
             )}
+            {item.dia === currentDia &&
+              placeToGo === startTour &&
+              item.origin === startTour && (
+                <div>
+                  <h2 style={{ marginTop: '80px' }}>Aquí inicia el tour</h2>
+                </div>
+              )}
           </div>
         ))}
       </div>
