@@ -18,10 +18,10 @@ import type { Itinerario, Transites } from '@/interfaces'
 
 interface Props {
   weather: { temp: number; city: string; icon: string }
-  cronograma: Itinerario
   transites: Transites[]
+  itinerario: Itinerario
 }
-const Bento = ({ weather, cronograma, transites }: Props) => {
+const Bento = ({ weather, itinerario, transites }: Props) => {
   const [visibleElements, setVisibleElements] = useState('home')
   useEffect(() => {
     const container = document.querySelector('.container')!
@@ -42,7 +42,7 @@ const Bento = ({ weather, cronograma, transites }: Props) => {
         <div data-swapy-item="cronograma">
           {visibleElements === 'cronograma' ? (
             <div>
-              <Cronograma cronograma={cronograma} />
+              <Cronograma cronograma={itinerario} />
             </div>
           ) : (
             <div className={styles.containerPortadaRegurso}>

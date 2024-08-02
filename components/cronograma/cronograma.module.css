@@ -1,6 +1,6 @@
 .containerCronograma {
   padding: 20px;
-  width: 420px;
+  width: 455px;
 }
 .cardContainer {
   display: flex;
@@ -15,7 +15,7 @@
 
 .containerAllD {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   max-width: 420px;
   overflow: auto;
 }

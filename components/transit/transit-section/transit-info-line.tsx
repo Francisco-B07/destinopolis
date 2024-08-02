@@ -1,7 +1,7 @@
 import TravelIcons from '../travel-icons'
 import { TimeDiff } from '../time-diff'
 import { IconMapPin } from '@/icons'
-import { Section } from '@/interfaces/res-transit'
+import { Section } from '@/interfaces/res-transit.interface'
 import styles from './transit-info-line.module.css'
 
 interface Props {

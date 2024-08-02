@@ -1,4 +1,4 @@
-import { ResTransit } from './res-transit'
+import { ResTransit } from './res-transit.interface'
 
 export interface Transites {
   dia: number
