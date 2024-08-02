@@ -1,6 +1,6 @@
 type Lugar = {
   nombre: string
-  fotos?: string[]
+  fotos: string[]
 }
 
 type Dia = {

@@ -1,5 +1,5 @@
 .containerCronograma {
-  padding: 20px;
+  padding: 10px 20px;
   width: 455px;
 }
 .cardContainer {
@@ -37,4 +37,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
+}
+.slider {
+  display: flex;
+  max-height: 33px;
+  object-fit: cover;
+}
+.photoSlider {
+  height: 30px;
+  width: 40px;
+  margin-right: 5px;
+  border: 1px solid rgb(15, 15, 15);
+  border-radius: 5px;
+}
+.photoSlider:hover {
+  scale: 1.1;
+}
+.currentPhotoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 420px;
+}
+.currentPhoto {
+  display: flex;
+  justify-content: center;
+  /* width: 320px; */
+  height: 220px;
+  object-fit: contain;
+  border-radius: 15px;
 }

@@ -21,6 +21,11 @@
   margin-bottom: 10px;
 }
 
+.dia:hover {
+  scale: 1.05;
+  color: rgb(15, 15, 15);
+}
+
 .subtitle {
   font-size: 13px;
   font-weight: bold;
@@ -48,7 +53,7 @@
 }
 
 .destino:hover {
-  background-color: green;
+  color: rgb(15, 15, 15);
 }
 .transitContainer {
   display: flex;
@@ -122,6 +127,6 @@
 .containerTransitOriginDestination {
   margin-top: 8px;
   overflow-y: auto;
-  max-height: 170px;
+  max-height: 220px;
   max-width: 400px;
 }

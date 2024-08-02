@@ -207,7 +207,8 @@ async function submitUserMessage(content: string) {
                 día: z.number(),
                 lugares: z.array(
                   z.object({
-                    nombre: z.string()
+                    nombre: z.string(),
+                    fotos: z.array(z.string())
                   })
                 )
               })
@@ -247,21 +248,22 @@ async function submitUserMessage(content: string) {
             The result should be an array of objects, where each object represents a day of the itinerary and contains two properties:
             1. 'day': a number indicating the corresponding day of the schedule.
             2. 'places': an array of objects, each containing the name of a place to visit.
+            3. 'photos': an array of strings void.
 
             Expected output example:
             [
                 {
                     "day": 1,
                     "places": [
-                        {"name": "Prado Museum"},
-                        {"name": "Retiro Park"}
+                        {"name": "Prado Museum", "photos": []},
+                        {"name": "Retiro Park", "photos": []}
                     ]
                 },
                 {
                     "day": 2,
                     "places": [
-                        {"name": "Plaza Mayor"},
-                        {"name": "Royal Palace"}
+                        {"name": "Plaza Mayor", "photos": []},
+                        {"name": "Royal Palace", "photos": []}
                     ]
                 }
             ]
