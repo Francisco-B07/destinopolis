@@ -6,8 +6,6 @@ interface Props {
   hotels: any[]
 }
 export const Hotels = ({ hotels }: Props) => {
-  console.log('hoteles', hotels[0])
-
   return (
     <div className="flex flex-col w-[440px] px-2">
       <h1 className={styles.title}>Hoteles en la ciudad</h1>

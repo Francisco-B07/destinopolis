@@ -19,10 +19,13 @@ import {
   TravelInCity,
   WeatherCard,
   Flights,
-  Tours
+  Tours,
+  Home
 } from '@/components/index'
 import type { Itinerario, Transites } from '@/interfaces'
 import { Hotels } from '../hotel/hotel'
+import { MapProvider } from '@/lib/providers/map-provider'
+import { MapComponent } from '../map/map'
 
 interface Props {
   weather: { temp: number; city: string; icon: string }
@@ -31,6 +34,7 @@ interface Props {
   flights: any[]
   hotels: any[]
   tours: any[]
+  location: string
 }
 const Bento = ({
   weather,
@@ -38,9 +42,10 @@ const Bento = ({
   transites,
   flights,
   hotels,
-  tours
+  tours,
+  location
 }: Props) => {
-  const [visibleElements, setVisibleElements] = useState('home')
+  const [visibleElements, setVisibleElements] = useState('inicio')
   useEffect(() => {
     const container = document.querySelector('.container')!
     const swapy = createSwapy(container)
@@ -173,7 +178,9 @@ const Bento = ({
       >
         <div data-swapy-item="mapa">
           {visibleElements === 'mapa' ? (
-            <div>Mapa</div>
+            <MapProvider>
+              <MapComponent location={location} transites={transites} />
+            </MapProvider>
           ) : (
             <div className={styles.containerPortadaRegurso}>
               <h1 className={styles.tituloPortadaRegurso}>Mapa</h1>
@@ -223,7 +230,7 @@ const Bento = ({
       >
         <div data-swapy-item="inicio" id="droppable" className="w-full">
           {visibleElements === 'inicio' ? (
-            <div>Inicio</div>
+            <Home />
           ) : (
             <div className="flex flex-col items-center justify-center p-2">
               <Image

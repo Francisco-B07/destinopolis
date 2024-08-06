@@ -43,7 +43,5 @@ export async function actionsHotel({ location }: Props) {
   hotels.push(data[1])
   hotels.push(data[2])
 
-  console.log('hotels action hotel', hotels)
-
   return hotels
 }

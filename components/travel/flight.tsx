@@ -6,8 +6,6 @@ interface Props {
   flights: any[]
 }
 export const Flights = ({ flights }: Props) => {
-  console.log('vuelos', flights[0])
-
   return (
     <div className="flex flex-col w-[440px] px-2">
       <h1 className={styles.title}>Los vuelos más económicos</h1>

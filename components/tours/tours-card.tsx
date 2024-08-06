@@ -6,7 +6,6 @@ interface Props {
   tour: any
 }
 export const ToursCard = ({ tour }: Props) => {
-  console.log('tour', tour)
   return (
     <div>
       <div className="max-w-2xl  mx-auto">

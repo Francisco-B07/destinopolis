@@ -24,10 +24,10 @@ export function EmptyScreen() {
         </p>
 
         <p className="leading-normal font-semibold mt-6">
-          Podras encontrar información sobre:
+          Podrás encontrar información sobre:
         </p>
-        <div className="flex flex-col gap-2 mt-2 mb-4">
-          <div className="flex justify-around">
+        <div className="flex flex-col gap-2 mt-4 mb-4">
+          <div className="flex justify-around mb-4">
             <CustomBadge>Lugares Turisticos</CustomBadge>
             <CustomBadge>Vuelos económicos</CustomBadge>
             <CustomBadge>Hoteles</CustomBadge>

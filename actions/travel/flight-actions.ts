@@ -43,7 +43,6 @@ export async function actionsFlight({
   })
 
   const { data } = await response.json()
-  console.log(data)
   return data
 }
 
@@ -66,6 +65,5 @@ export async function actionsFlightPrice({ flight }: { flight: any }) {
   })
 
   const data = await response.json()
-  console.log(data)
   return data
 }

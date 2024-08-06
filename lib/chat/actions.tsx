@@ -317,7 +317,8 @@ async function submitUserMessage(content: string) {
                       cronograma,
                       transites,
                       hotels,
-                      tours
+                      tours,
+                      location
                     }
                   }
                 ]
@@ -345,6 +346,7 @@ async function submitUserMessage(content: string) {
               flights={flights}
               hotels={hotels}
               tours={tours}
+              location={location}
             />
           )
         }

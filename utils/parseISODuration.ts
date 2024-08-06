@@ -3,8 +3,6 @@ interface Props {
 }
 
 export function parseISODuration({ duration }: Props) {
-  console.log('duration', duration)
-
   if (!duration) {
     throw new Error('Duration is undefined or empty')
   }

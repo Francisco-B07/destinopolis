@@ -6,10 +6,9 @@ interface Props {
   tours: any[]
 }
 export const Tours = ({ tours }: Props) => {
-  console.log('tourssssssssssssss', tours)
   return (
     <div className="flex flex-col w-[440px] px-2">
-      <h1 className={styles.title}>Tours</h1>
+      <h1 className={styles.title}>Tours cercanos</h1>
       <div className="flex justify-between gap-2">
         {tours.map((tour, index) => (
           <div key={index}>
