@@ -12,7 +12,7 @@ export const FlightCard = ({ flight }: Props) => {
   })
 
   return (
-    <div>
+    <div className="max-w-[135px]">
       <div className="max-w-2xl mx-auto">
         <div className="bg-[#dbdbdb] shadow-md rounded-lg max-w-sm ">
           <Image
@@ -23,7 +23,7 @@ export const FlightCard = ({ flight }: Props) => {
             height={200}
           />
 
-          <div className="px-4 pb-4">
+          <div className="px-2 pb-4">
             <h3 className="flex justify-start items-center gap-1 mb-1 text-gray-900 font-semibold text-sm tracking-tight dark:text-white">
               Asientos disp:{' '}
               <span className="font-normal text-sm">

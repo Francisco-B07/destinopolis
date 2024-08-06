@@ -1,6 +1,6 @@
 export { Cronograma } from './cronograma/cronograma'
 export { Time } from './time/time'
-export { WeatherCard } from './weather/weather-card'
+export { Weather } from './weather/weather'
 export { TravelInCity } from './transit/travel-in-city'
 export { Slider } from './ui/slider'
 export { Flights } from './travel/flight'

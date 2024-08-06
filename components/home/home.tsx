@@ -4,7 +4,7 @@ export const Home = () => {
   return (
     <div>
       <h1 className={style.mensaje}>
-        Arrastre aqui la tarjeta que desea consultar
+        Arrastra una tarjeta aquí para ver más detalles
       </h1>
     </div>
   )

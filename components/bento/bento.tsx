@@ -17,7 +17,7 @@ import styles from './bento.module.css'
 import {
   Cronograma,
   TravelInCity,
-  WeatherCard,
+  Weather,
   Flights,
   Tours,
   Home
@@ -28,7 +28,7 @@ import { MapProvider } from '@/lib/providers/map-provider'
 import { MapComponent } from '../map/map'
 
 interface Props {
-  weather: { temp: number; city: string; icon: string }
+  weather: any
   transites: Transites[]
   itinerario: Itinerario
   flights: any[]
@@ -203,11 +203,7 @@ const Bento = ({
           {visibleElements === 'clima' ? (
             <div>
               {' '}
-              <WeatherCard
-                city={weather.city}
-                temp={weather.temp}
-                icon={weather.icon}
-              />
+              <Weather weather={weather} />
             </div>
           ) : (
             <div className={styles.containerPortadaRegurso}>

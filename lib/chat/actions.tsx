@@ -281,7 +281,7 @@ async function submitUserMessage(content: string) {
           const toolCallId = nanoid()
 
           // const time = await actionsTime(locationTime)
-          const weather = await actionsWeather(locationWeather)
+          const weather = await actionsWeather({ locationWeather, location })
           const transites = await actionsTransitArray({
             cronograma,
             location
