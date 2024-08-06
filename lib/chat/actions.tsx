@@ -46,6 +46,8 @@ import { actionsTransitArray } from '@/actions/transit/actions-transit-array'
 import { Transites } from '@/interfaces'
 import BentoSkeleton from '@/components/bento/bento-skeleton'
 
+export const maxDuration = 59
+
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
 
