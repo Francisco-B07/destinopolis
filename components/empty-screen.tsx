@@ -40,7 +40,7 @@ export function EmptyScreen() {
           </div>
         </div>
         <div
-          className="flex bg-yellow-100 rounded-lg p-4  text-sm text-yellow-700"
+          className="flex bg-yellow-100 rounded-lg p-4 mt-4 text-sm text-yellow-700"
           role="alert"
         >
           <svg
