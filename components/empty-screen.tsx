@@ -56,7 +56,8 @@ export function EmptyScreen() {
           </svg>
           <div>
             <span className="font-medium">¡Alerta!</span> Tu solicitud puede
-            fallar al exceder el límite de maxDuration del hosting.
+            fallar si excede el límite de maxDuration del hosting. Genera un
+            viaje de pocos días para que el hosting pueda procesar tu solicitud.
           </div>
         </div>
       </div>
