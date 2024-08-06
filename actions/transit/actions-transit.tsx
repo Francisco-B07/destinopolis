@@ -6,7 +6,7 @@ interface Props {
   destination: string
 }
 
-export const maxDuration = 5 * 60 * 1000 // 5 minutos
+export const maxDuration = 300
 
 export async function actionsTransit({ origin, destination }: Props) {
   const resTransit = await fetch(

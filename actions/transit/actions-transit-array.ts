@@ -4,7 +4,7 @@ import { Itinerario, ResTransit, Transites } from '@/interfaces'
 import { getLocationStr } from '@/utils/locationStr'
 import { actionsTransit } from './actions-transit'
 
-export const maxDuration = 5 * 60 * 1000 // 5 minutos
+export const maxDuration = 300
 
 type Visita = {
   dia: number
