@@ -11,11 +11,13 @@ export const ToursCard = ({ tour }: Props) => {
     <div>
       <div className="max-w-2xl  mx-auto">
         <div className="bg-[#dbdbdb] shadow-md rounded-lg max-w-sm ">
-          <img
-            src={tour.pictures[0]}
-            alt="tour"
-            className="rounded-t-lg p-2 h-[100px]"
-          />
+          <div className="flex items-center justify-center">
+            <img
+              src={tour.pictures[0]}
+              alt="tour"
+              className="rounded-t-lg p-2 h-[100px] object-cover "
+            />
+          </div>
 
           <div className="px-4 pb-4 h-[80px]">
             <h3

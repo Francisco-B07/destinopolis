@@ -10,6 +10,7 @@ import imagenTours from '@/public/tours.jpg'
 import imagenHospedaje from '@/public/hospedaje.jpg'
 import imagenTransit from '@/public/transit.jpg'
 import imagenMapaLugares from '@/public/mapa-lugares.jpg'
+import logo from '@/public/logo.png'
 
 import styles from './bento.module.css'
 
@@ -53,10 +54,10 @@ const Bento = ({
   return (
     <div className={`${styles.bentoContainer} container`}>
       <div
-        className={`${styles.bentoItem} ${styles.item1}`}
+        className={`${styles.bentoItem} ${styles.item1} w-full`}
         data-swapy-slot="schedule"
       >
-        <div data-swapy-item="cronograma">
+        <div data-swapy-item="cronograma" className="w-full">
           {visibleElements === 'cronograma' ? (
             <div>
               <Cronograma cronograma={itinerario} />
@@ -220,8 +221,21 @@ const Bento = ({
         className={`${styles.bentoItem} ${styles.item8}`}
         data-swapy-slot="home"
       >
-        <div data-swapy-item="inicio" id="droppable">
-          inicio
+        <div data-swapy-item="inicio" id="droppable" className="w-full">
+          {visibleElements === 'inicio' ? (
+            <div>Inicio</div>
+          ) : (
+            <div className="flex flex-col items-center justify-center p-2">
+              <Image
+                src={logo}
+                alt="logo"
+                width={300}
+                height={300}
+                className={styles.logo}
+              />
+              <h1 className={styles.tituloLogo}>Destinopolis</h1>
+            </div>
+          )}
         </div>
       </div>
     </div>

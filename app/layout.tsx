@@ -13,10 +13,10 @@ export const metadata = {
     ? new URL(`https://${process.env.VERCEL_URL}`)
     : undefined,
   title: {
-    default: 'Next.js AI Chatbot',
-    template: `%s - Next.js AI Chatbot`
+    default: 'Destinopolis'
   },
-  description: 'An AI-powered chatbot template built with Next.js and Vercel.',
+  description:
+    'Planifica tus viajes con nuestra plataforma inteligente que genera itinerarios personalizados. Descubre información sobre tours, vuelos, hoteles, clima y medios de transporte público en tu destino. ¡Optimiza tu experiencia de viaje con la ayuda de la inteligencia artificial!',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
