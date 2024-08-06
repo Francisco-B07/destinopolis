@@ -19,7 +19,6 @@ export const metadata = {
     'Planifica tus viajes con nuestra plataforma inteligente que genera itinerarios personalizados. Descubre información sobre tours, vuelos, hoteles, clima y medios de transporte público en tu destino. ¡Optimiza tu experiencia de viaje con la ayuda de la inteligencia artificial!',
   icons: {
     icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png'
   }
 }

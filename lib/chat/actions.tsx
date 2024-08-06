@@ -216,13 +216,6 @@ async function submitUserMessage(content: string) {
             `
           ),
 
-          // locationTime: z.string().describe(
-          //   `Este es el nombre de la ciudad que se quiere obtener la hora actual.
-          //   Te van a pasar el nombre de una ciudad y debes añadir el timezone de la ciudad.
-          //   Por ejemplo,si te pasan "Nueva York" va a ser America/New_York,
-          //   Lima es America/Lima, España es Europe/Madrid, etc.
-          //     `
-          // ),
           cronograma: z
             .array(
               z.object({
@@ -280,16 +273,16 @@ async function submitUserMessage(content: string) {
 
           const toolCallId = nanoid()
 
-          // const time = await actionsTime(locationTime)
           const weather = await actionsWeather({ locationWeather, location })
+          console.log('weather')
           const transites = await actionsTransitArray({
             cronograma,
             location
           })
+          console.log('transites')
 
           const itinerario = await actionsFotosArray({ cronograma })
-
-          // console.log('date', departureDate)
+          console.log('itinerario')
 
           const flights = await actionsFlight({
             originLocationCode,
@@ -297,8 +290,12 @@ async function submitUserMessage(content: string) {
             departureDate
           })
 
+          console.log('vuelos')
+
           const hotels = await actionsHotel({ location })
+          console.log('hoteles')
           const tours = await actionsTours({ location })
+          console.log('tours')
 
           aiState.done({
             ...aiState.get(),
@@ -314,10 +311,11 @@ async function submitUserMessage(content: string) {
                     toolCallId,
                     args: {
                       weather,
-                      cronograma,
+                      itinerario,
                       transites,
                       hotels,
                       tours,
+                      flights,
                       location
                     }
                   }
@@ -351,76 +349,6 @@ async function submitUserMessage(content: string) {
           )
         }
       }
-
-      // show_time: {
-      //   description:
-      //     'Obtiene la información actualizada de la hora de una ciudad.',
-      //   parameters: z.object({
-      //     locationTime: z.string().describe(
-      //       `Este es el nombre de la ciudad que se quiere obtener la hora actual.
-      //       Te van a pasar el nombre de una ciudad y debes añadir el timezone de la ciudad.
-      //       Por ejemplo,si te pasan "Nueva York" va a ser America/New_York,
-      //       Lima es America/Lima, España es Europe/Madrid, etc.
-      //         `
-      //     )
-      //   }),
-      //   generate: async function* ({ locationTime }) {
-      //     console.log(locationTime)
-
-      //     yield (
-      //       <div>
-      //         <h3>Loading...</h3>
-      //       </div>
-      //     )
-
-      //     const toolCallId = nanoid()
-
-      //     const res = await fetch(
-      //       `https://worldtimeapi.org/api/timezone/${locationTime}`
-      //     )
-      //     const { datetime } = await res.json()
-      //     const time = moment.tz(datetime, locationTime).format('h:mmA')
-
-      //     aiState.done({
-      //       ...aiState.get(),
-      //       messages: [
-      //         ...aiState.get().messages,
-      //         {
-      //           id: nanoid(),
-      //           role: 'assistant',
-      //           content: [
-      //             {
-      //               type: 'tool-call',
-      //               toolName: 'show_weather',
-      //               toolCallId,
-      //               args: { locationTime }
-      //             }
-      //           ]
-      //         },
-      //         {
-      //           id: nanoid(),
-      //           role: 'tool',
-      //           content: [
-      //             {
-      //               type: 'tool-result',
-      //               toolName: 'show_weather',
-      //               toolCallId,
-      //               result: locationTime
-      //             }
-      //           ]
-      //         }
-      //       ]
-      //     })
-
-      //     return (
-      //       <div>
-      //         <h1>
-      //           La hora actual de {locationTime} es {time}
-      //         </h1>
-      //       </div>
-      //     )
-      //   }
-      // }
     }
   })
 
