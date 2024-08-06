@@ -55,8 +55,8 @@ export function EmptyScreen() {
             ></path>
           </svg>
           <div>
-            <span className="font-medium">¡Alerta!</span> Solicitar un máximo de
-            3 días de viajes para no exceder el límite de maxDuration.
+            <span className="font-medium">¡Alerta!</span> Tu solicitud puede
+            fallar al exceder el límite de maxDuration del hosting.
           </div>
         </div>
       </div>

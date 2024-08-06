@@ -10,11 +10,19 @@ export const Flights = ({ flights }: Props) => {
     <div className="flex flex-col w-[440px] px-2">
       <h1 className={styles.title}>Los vuelos más económicos</h1>
       <div className="flex justify-between gap-2">
-        {flights.map((flight, index) => (
-          <div key={index}>
-            <FlightCard flight={flight} />
+        {flights ? (
+          flights.map((flight, index) => (
+            <div key={index}>
+              <FlightCard flight={flight} />
+            </div>
+          ))
+        ) : (
+          <div>
+            <p className="flex justify-center items-center w-[420px] h-[200px]">
+              No hemos encontrado vuelos para ti
+            </p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   )

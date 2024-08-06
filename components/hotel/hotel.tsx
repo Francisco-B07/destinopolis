@@ -10,12 +10,20 @@ export const Hotels = ({ hotels }: Props) => {
     <div className="flex flex-col w-[440px] px-2">
       <h1 className={styles.title}>Hoteles en la ciudad</h1>
       <div className="flex justify-between gap-2">
-        {hotels.map((hotel, index) => (
-          <div key={index}>
-            {' '}
-            <HotelCard hotel={hotel} />
+        {hotels ? (
+          hotels.map((hotel, index) => (
+            <div key={index}>
+              {' '}
+              <HotelCard hotel={hotel} />
+            </div>
+          ))
+        ) : (
+          <div>
+            <p className="flex justify-center items-center w-[420px] h-[200px]">
+              No hemos encontrado hoteles para ti
+            </p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   )
