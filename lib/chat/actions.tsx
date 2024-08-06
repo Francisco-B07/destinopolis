@@ -46,7 +46,8 @@ import { actionsTransitArray } from '@/actions/transit/actions-transit-array'
 import { Transites } from '@/interfaces'
 import BentoSkeleton from '@/components/bento/bento-skeleton'
 
-export const maxDuration = 300
+// export const maxDuration = 300 // máxima duración con vercel pago
+export const maxDuration = 60 // máxima duración con vercel free
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -232,7 +233,7 @@ async function submitUserMessage(content: string) {
             )
             .describe(
               `
-            Plan a detailed travel itinerary for the city and number of days specified by the user. Organize the visits by grouping nearby places to be visited on the same day. Ensure the itinerary is balanced in terms of time and the number of visits per day.
+            Plan a detailed travel itinerary for the city and number of days specified by the user. Organize the visits by grouping nearby places to be visited on the same day. Ensure the itinerary is balanced in terms of time and the number of visits per day. If the number of days the trip will last is not specified, generate an itinerary for 3 days
 
             The result should be an array of objects, where each object represents a day of the itinerary and contains two properties:
             1. 'day': a number indicating the corresponding day of the schedule.
@@ -276,15 +277,12 @@ async function submitUserMessage(content: string) {
           const toolCallId = nanoid()
 
           const weather = await actionsWeather({ locationWeather, location })
-          console.log('weather')
           const transites = await actionsTransitArray({
             cronograma,
             location
           })
-          console.log('transites')
 
           const itinerario = await actionsFotosArray({ cronograma })
-          console.log('itinerario')
 
           const flights = await actionsFlight({
             originLocationCode,
@@ -292,12 +290,8 @@ async function submitUserMessage(content: string) {
             departureDate
           })
 
-          console.log('vuelos')
-
           const hotels = await actionsHotel({ location })
-          console.log('hoteles')
           const tours = await actionsTours({ location })
-          console.log('tours')
 
           aiState.done({
             ...aiState.get(),
