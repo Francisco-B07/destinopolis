@@ -13,15 +13,32 @@ import imagenMapaLugares from '@/public/mapa-lugares.jpg'
 
 import styles from './bento.module.css'
 
-import { Cronograma, TravelInCity, WeatherCard } from '@/components/index'
+import {
+  Cronograma,
+  TravelInCity,
+  WeatherCard,
+  Flights,
+  Tours
+} from '@/components/index'
 import type { Itinerario, Transites } from '@/interfaces'
+import { Hotels } from '../hotel/hotel'
 
 interface Props {
   weather: { temp: number; city: string; icon: string }
   transites: Transites[]
   itinerario: Itinerario
+  flights: any[]
+  hotels: any[]
+  tours: any[]
 }
-const Bento = ({ weather, itinerario, transites }: Props) => {
+const Bento = ({
+  weather,
+  itinerario,
+  transites,
+  flights,
+  hotels,
+  tours
+}: Props) => {
   const [visibleElements, setVisibleElements] = useState('home')
   useEffect(() => {
     const container = document.querySelector('.container')!
@@ -88,7 +105,7 @@ const Bento = ({ weather, itinerario, transites }: Props) => {
         <div data-swapy-item="tiquets">
           {visibleElements === 'tiquets' ? (
             <div>
-              <h1>Tiquets</h1>
+              <Tours tours={tours} />
             </div>
           ) : (
             <div className={styles.containerPortadaRegurso}>
@@ -110,7 +127,7 @@ const Bento = ({ weather, itinerario, transites }: Props) => {
       >
         <div data-swapy-item="vuelos">
           {visibleElements === 'vuelos' ? (
-            <div>Vuelos</div>
+            <Flights flights={flights} />
           ) : (
             <div className={styles.containerPortadaRegurso}>
               <h1 className={styles.tituloPortadaRegurso}>Vuelos</h1>
@@ -132,7 +149,7 @@ const Bento = ({ weather, itinerario, transites }: Props) => {
         <div data-swapy-item="hospedaje">
           {visibleElements === 'hospedaje' ? (
             <div>
-              <h1>Hospedaje</h1>
+              <Hotels hotels={hotels} />
             </div>
           ) : (
             <div className={styles.containerPortadaRegurso}>

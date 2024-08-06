@@ -34,9 +34,17 @@ import { SpinnerMessage, UserMessage } from '@/components/stocks/message'
 import { Chat, Message } from '@/lib/types'
 import { auth } from '@/auth'
 import Bento from '@/components/bento/bento'
-import { actionsFotosArray, actionsTime, actionsWeather } from '@/actions'
+import {
+  actionsFlight,
+  actionsFotosArray,
+  actionsHotel,
+  actionsTime,
+  actionsTours,
+  actionsWeather
+} from '@/actions'
 import { actionsTransitArray } from '@/actions/transit/actions-transit-array'
 import { Transites } from '@/interfaces'
+import BentoSkeleton from '@/components/bento/bento-skeleton'
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -129,8 +137,8 @@ async function submitUserMessage(content: string) {
   let textNode: undefined | React.ReactNode
 
   const result = await streamUI({
-    // model: openai('gpt-3.5-turbo'),
-    model: openai('gpt-4o-mini'),
+    model: openai('gpt-3.5-turbo'),
+    // model: openai('gpt-4o-mini'),
 
     initial: <SpinnerMessage />,
     system: `\
@@ -194,6 +202,20 @@ async function submitUserMessage(content: string) {
               Por ejemplo, si quieres obtener la información actualizada de clima de Londres, debes pasar "London,uk".
               `
           ),
+          originLocationCode: z.string().describe(
+            `Código IATA de la ciudad/aeropuerto desde el que saldrá el usuario, por ejemplo "BOS" para Boston, "PAR" para Paris.
+            Si no se especifica ningún código IATA, se utilizará el código de Bercelona.
+              `
+          ),
+          destinationLocationCode: z.string().describe(
+            `Código IATA de la ciudad/aeropuerto al cual desea ir el usuario, por ejemplo "BOS" para Boston, "PAR" for Paris.
+              `
+          ),
+          departureDate: z.string().describe(
+            `El usuario indicará la fecha de partida de su viaje. Debes obtener la fecha de partida única para el viaje. Si el usuario no indica ninguna fecha, toma como fecha de partida el 13 de agosto de 2024. Las fechas se especifican en el formato ISO 8601 (AAAA-MM-DD), por ejemplo, 2017-12-25.
+            `
+          ),
+
           // locationTime: z.string().describe(
           //   `Este es el nombre de la ciudad que se quiere obtener la hora actual.
           //   Te van a pasar el nombre de una ciudad y debes añadir el timezone de la ciudad.
@@ -214,34 +236,6 @@ async function submitUserMessage(content: string) {
               })
             )
             .describe(
-              //   `
-              // Planifica un itinerario de viaje detallado para la ciudad y la cantidad de días
-              // especificados por el usuario. Organiza las visitas agrupando los lugares cercanos entre sí
-              // para que se visiten el mismo día. Asegúrate de equilibrar el itinerario en términos de tiempo
-              // y número de visitas por día.
-
-              // El resultado debe ser un array de objetos, donde cada objeto representa un día del itinerario y contiene dos propiedades:
-              // 1. 'día': un número que indica el día del cronograma.
-              // 2. 'lugares': un array de objetos, cada uno con el nombre de un lugar a visitar.
-
-              // Ejemplo de salida esperada:
-              // [
-              //     {
-              //         "día": 1,
-              //         "lugares": [
-              //             {"nombre": "Museo del Prado"},
-              //             {"nombre": "Parque del Retiro"}
-              //         ]
-              //     },
-              //     {
-              //         "día": 2,
-              //         "lugares": [
-              //             {"nombre": "Plaza Mayor"},
-              //             {"nombre": "Palacio Real"}
-              //         ]
-              //     }
-              // ]
-              //   `
               `
             Plan a detailed travel itinerary for the city and number of days specified by the user. Organize the visits by grouping nearby places to be visited on the same day. Ensure the itinerary is balanced in terms of time and the number of visits per day.
 
@@ -270,10 +264,17 @@ async function submitUserMessage(content: string) {
             `
             )
         }),
-        generate: async function* ({ location, locationWeather, cronograma }) {
+        generate: async function* ({
+          location,
+          locationWeather,
+          cronograma,
+          originLocationCode,
+          destinationLocationCode,
+          departureDate
+        }) {
           yield (
             <div>
-              <h3>Loading...</h3>
+              <BentoSkeleton />
             </div>
           )
 
@@ -288,13 +289,16 @@ async function submitUserMessage(content: string) {
 
           const itinerario = await actionsFotosArray({ cronograma })
 
-          // const results = await Promise.allSettled(transitesPromises)
-          // const transites: Transites[] = results
-          //   .filter(result => result.status === 'fulfilled')
-          //   .map(result => (result as PromiseFulfilledResult<Transites>).value)
-          //   .filter(item => item !== null) as Transites[]
+          // console.log('date', departureDate)
 
-          // console.log('transites desde el actions', transites)
+          const flights = await actionsFlight({
+            originLocationCode,
+            destinationLocationCode,
+            departureDate
+          })
+
+          const hotels = await actionsHotel({ location })
+          const tours = await actionsTours({ location })
 
           aiState.done({
             ...aiState.get(),
@@ -311,7 +315,9 @@ async function submitUserMessage(content: string) {
                     args: {
                       weather,
                       cronograma,
-                      transites
+                      transites,
+                      hotels,
+                      tours
                     }
                   }
                 ]
@@ -336,6 +342,9 @@ async function submitUserMessage(content: string) {
               weather={weather}
               itinerario={itinerario}
               transites={transites}
+              flights={flights}
+              hotels={hotels}
+              tours={tours}
             />
           )
         }

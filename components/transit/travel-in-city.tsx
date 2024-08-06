@@ -98,7 +98,9 @@ export const TravelInCity = ({ transites }: Props) => {
               placeToGo === startTour &&
               item.origin === startTour && (
                 <div>
-                  <h2 style={{ marginTop: '80px' }}>Aquí inicia el tour</h2>
+                  <h2 className={styles.cartelInicioTour}>
+                    Aquí inicia el tour
+                  </h2>
                 </div>
               )}
           </div>

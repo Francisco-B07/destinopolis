@@ -1,9 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styles from './cronograma.module.css'
 import type { Itinerario } from '@/interfaces'
 import 'node_modules/@glidejs/glide/dist/css/glide.core.min.css'
-import Glide from '@glidejs/glide'
 
 interface Props {
   className?: string
@@ -25,10 +24,6 @@ export const Cronograma = ({ cronograma }: Props) => {
     { length: cronograma[cantidadDeVisitas - 1].día },
     (v, i) => i + 1
   )
-
-  // ----------SLIDER---------------
-
-  // -----------------------------------------------------
 
   return (
     <div className={styles.containerCronograma}>
