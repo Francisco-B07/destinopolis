@@ -4,8 +4,6 @@ import { Itinerario, ResTransit, Transites } from '@/interfaces'
 import { getLocationStr } from '@/utils/locationStr'
 import { actionsTransit } from './actions-transit'
 
-export const maxDuration = 60
-
 type Visita = {
   dia: number
   origin: string
