@@ -3,7 +3,7 @@ import { HotelCard } from './hotel-card'
 import styles from './hotel.module.css'
 
 interface Props {
-  hotels: any[]
+  hotels?: any[]
 }
 export const Hotels = ({ hotels }: Props) => {
   return (

@@ -6,10 +6,10 @@ import 'node_modules/@glidejs/glide/dist/css/glide.core.min.css'
 
 interface Props {
   className?: string
-  cronograma: Itinerario
+  cronograma?: Itinerario
 }
 
-export const Cronograma = ({ cronograma }: Props) => {
+export const Cronograma = ({ cronograma = [] }: Props) => {
   const [indexPhoto, setIndexPhoto] = useState(0)
   const [positionLugar, setPositionLugar] = useState(0)
 

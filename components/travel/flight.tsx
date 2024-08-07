@@ -3,7 +3,7 @@ import { FlightCard } from './flight-card'
 import styles from './travel.module.css'
 
 interface Props {
-  flights: any[]
+  flights?: any[]
 }
 export const Flights = ({ flights }: Props) => {
   return (

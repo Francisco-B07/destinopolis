@@ -28,12 +28,12 @@ import { MapProvider } from '@/lib/providers/map-provider'
 import { MapComponent } from '../map/map'
 
 interface Props {
-  weather: any
-  transites: Transites[]
-  itinerario: Itinerario
-  flights: any[]
-  hotels: any[]
-  tours: any[]
+  weather?: any
+  transites?: Transites[]
+  itinerario?: Itinerario
+  flights?: any[]
+  hotels?: any[]
+  tours?: any[]
   location: string
 }
 const Bento = ({

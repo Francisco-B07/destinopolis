@@ -5,10 +5,10 @@ import styles from './travel.module.css'
 import { useState } from 'react'
 
 interface Props {
-  transites: Transites[]
+  transites?: Transites[]
 }
 
-export const TravelInCity = ({ transites }: Props) => {
+export const TravelInCity = ({ transites = [] }: Props) => {
   const [placeToGo, setPlaceToGo] = useState(transites[0].destination)
   const [startTour, setStartTour] = useState(transites[0].origin)
   const [currentDia, setCurrentDia] = useState(1)

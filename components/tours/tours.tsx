@@ -3,7 +3,7 @@ import styles from './tours.module.css'
 import { ToursCard } from './tours-card'
 
 interface Props {
-  tours: any[]
+  tours?: any[]
 }
 export const Tours = ({ tours }: Props) => {
   return (

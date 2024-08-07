@@ -7,7 +7,7 @@ import style from './map.module.css'
 
 interface Props {
   location: string
-  transites: Transites[]
+  transites?: Transites[]
 }
 
 const MapComponent = ({ location, transites }: Props) => {
@@ -44,27 +44,29 @@ const MapComponent = ({ location, transites }: Props) => {
         zoom={defaultMapZoom}
         options={defaultMapOptions}
       >
-        {transites.map((transite, index) => {
-          return (
-            <div key={index}>
-              <div>
+        {transites &&
+          transites.map((transite, index) => {
+            return (
+              <div key={index}>
+                <div>
+                  <Marker
+                    key={index}
+                    position={
+                      transite.transit.routes[0].sections[0].departure.place
+                        .location
+                    }
+                  />
+                </div>
                 <Marker
                   key={index}
                   position={
-                    transite.transit.routes[0].sections[0].departure.place
+                    transite.transit.routes[0].sections[0].arrival.place
                       .location
                   }
                 />
               </div>
-              <Marker
-                key={index}
-                position={
-                  transite.transit.routes[0].sections[0].arrival.place.location
-                }
-              />
-            </div>
-          )
-        })}
+            )
+          })}
       </GoogleMap>
     </div>
   )

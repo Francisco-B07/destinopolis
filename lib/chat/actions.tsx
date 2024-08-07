@@ -275,22 +275,54 @@ async function submitUserMessage(content: string) {
 
           const toolCallId = nanoid()
 
-          const weather = await actionsWeather({ locationWeather, location })
-          const transites = await actionsTransitArray({
-            cronograma,
-            location
-          })
+          // const weather = await actionsWeather({ locationWeather, location })
+          // const transites = await actionsTransitArray({
+          //   cronograma,
+          //   location
+          // })
 
-          const itinerario = await actionsFotosArray({ cronograma })
+          // const itinerario = await actionsFotosArray({ cronograma })
 
-          const flights = await actionsFlight({
-            originLocationCode,
-            destinationLocationCode,
-            departureDate
-          })
+          // const flights = await actionsFlight({
+          //   originLocationCode,
+          //   destinationLocationCode,
+          //   departureDate
+          // })
 
-          const hotels = await actionsHotel({ location })
-          const tours = await actionsTours({ location })
+          // const hotels = await actionsHotel({ location })
+          // const tours = await actionsTours({ location })
+
+          async function fetchData() {
+            try {
+              const [weather, transites, itinerario, flights, hotels, tours] =
+                await Promise.all([
+                  actionsWeather({ locationWeather, location }),
+                  actionsTransitArray({ cronograma, location }),
+                  actionsFotosArray({ cronograma }),
+                  actionsFlight({
+                    originLocationCode,
+                    destinationLocationCode,
+                    departureDate
+                  }),
+                  actionsHotel({ location }),
+                  actionsTours({ location })
+                ])
+
+              return { weather, transites, itinerario, flights, hotels, tours }
+            } catch (error) {
+              console.error('Error ejecutando acciones:', error)
+              return null
+            }
+          }
+
+          const data = await fetchData()
+
+          const weather = data?.weather
+          const transites = data?.transites
+          const itinerario = data?.itinerario
+          const flights = data?.flights
+          const hotels = data?.hotels
+          const tours = data?.tours
 
           aiState.done({
             ...aiState.get(),

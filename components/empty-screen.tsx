@@ -40,7 +40,7 @@ export function EmptyScreen() {
           </div>
         </div>
         <div
-          className="flex bg-yellow-100 rounded-lg p-4 mt-4 text-sm text-yellow-700"
+          className="flex bg-yellow-100 rounded-lg p-4 mt-20 text-sm text-yellow-700"
           role="alert"
         >
           <svg
@@ -55,9 +55,10 @@ export function EmptyScreen() {
             ></path>
           </svg>
           <div>
-            <span className="font-medium">¡Alerta!</span> Tu solicitud puede
-            fallar si excede el límite de maxDuration del hosting. Genera un
-            viaje de pocos días para que el hosting pueda procesar tu solicitud.
+            <span className="font-medium">¡Alerta!</span> La solicitud puede
+            fallar si supera el tiempo máximo permitido por nuestro servicio de
+            alojamiento. Genera un viaje de pocos días para asegurar que el
+            servicio pueda procesar tu solicitud correctamente.
           </div>
         </div>
       </div>
