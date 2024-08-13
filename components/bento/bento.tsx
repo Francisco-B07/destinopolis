@@ -179,7 +179,7 @@ const Bento = ({
         <div data-swapy-item="mapa">
           {visibleElements === 'mapa' ? (
             <MapProvider>
-              <MapComponent location={location} transites={transites} />
+              <MapComponent transites={transites} />
             </MapProvider>
           ) : (
             <div className={styles.containerPortadaRegurso}>
