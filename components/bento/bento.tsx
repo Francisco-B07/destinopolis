@@ -156,7 +156,7 @@ const Bento = ({
           {visibleElements === 'hospedaje' ? (
             <div>
               <MapProvider>
-                <Hotels transites={transites} hotels={hotels} />
+                <Hotels cronograma={itinerario} hotels={hotels} />
               </MapProvider>
             </div>
           ) : (
@@ -181,7 +181,7 @@ const Bento = ({
         <div data-swapy-item="mapa">
           {visibleElements === 'mapa' ? (
             <MapProvider>
-              <MapComponent transites={transites} />
+              <MapComponent cronograma={itinerario} />
             </MapProvider>
           ) : (
             <div className={styles.containerPortadaRegurso}>

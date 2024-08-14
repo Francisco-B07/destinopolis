@@ -42,6 +42,7 @@ export const Cronograma = ({ cronograma = [] }: Props) => {
             }
             onClick={() => {
               setCurrentDia(dia)
+              setPositionLugar(0)
               const indice = dia - 1
               setPhotos(cronograma[indice].lugares[0].fotos)
               setSelectedPlace(cronograma[indice].lugares[0].nombre)
@@ -100,7 +101,12 @@ export const Cronograma = ({ cronograma = [] }: Props) => {
             }}
           >
             <button>
-              <img src={photo} alt="" className={styles.photoSlider} />
+              <img
+                className={styles.photoSlider}
+                src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}`}
+                alt="Foto de la Estatua de la Libertad"
+              />
+              {/* <img src={photo} alt="" className={styles.photoSlider} /> */}
             </button>
           </li>
         ))}
@@ -108,9 +114,7 @@ export const Cronograma = ({ cronograma = [] }: Props) => {
 
       <article className={styles.currentPhotoContainer}>
         <img
-          src={
-            cronograma[currentDia - 1].lugares[positionLugar].fotos[indexPhoto]
-          }
+          src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${cronograma[currentDia - 1].lugares[positionLugar].fotos[indexPhoto]}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}`}
           alt=""
           className={styles.currentPhoto}
         />{' '}

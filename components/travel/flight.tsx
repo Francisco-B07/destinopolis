@@ -8,7 +8,7 @@ interface Props {
 export const Flights = ({ flights }: Props) => {
   return (
     <div className="flex flex-col w-[440px] px-2">
-      <h1 className={styles.title}>Los vuelos más económicos</h1>
+      {flights && <h1 className={styles.title}>Los vuelos más económicos</h1>}
       <div className="flex justify-between gap-2">
         {flights ? (
           flights.map((flight, index) => (
@@ -17,11 +17,11 @@ export const Flights = ({ flights }: Props) => {
             </div>
           ))
         ) : (
-          <div>
-            <p className="flex justify-center items-center w-[420px] h-[200px]">
+          <section>
+            <h1 className={styles.mensaje}>
               No hemos encontrado vuelos para ti
-            </p>
-          </div>
+            </h1>
+          </section>
         )}
       </div>
     </div>

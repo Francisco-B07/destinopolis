@@ -225,7 +225,13 @@ async function submitUserMessage(content: string) {
                 lugares: z.array(
                   z.object({
                     nombre: z.string(),
-                    fotos: z.array(z.string())
+                    fotos: z.array(z.string()),
+                    rating: z.number(),
+                    userRatingsTotal: z.number(),
+                    location: z.object({
+                      lat: z.number(),
+                      lng: z.number()
+                    })
                   })
                 )
               })
@@ -238,21 +244,24 @@ async function submitUserMessage(content: string) {
             1. 'day': a number indicating the corresponding day of the schedule.
             2. 'places': an array of objects, each containing the name of a place to visit.
             3. 'photos': an array of strings void.
+            4. 'rating': a number 0 .
+            5. 'userRatingsTotal': a number 0 .
+            6. 'location': a object with lat and lng.
 
             Expected output example:
             [
                 {
                     "day": 1,
                     "places": [
-                        {"name": "Prado Museum", "photos": []},
-                        {"name": "Retiro Park", "photos": []}
+                        {"name": "Prado Museum", "photos": [], "rating": 0, "userRatingsTotal": 0, "location": {"lat": 0, "lng": 0}},
+                        {"name": "Retiro Park", "photos": [], "rating": 0, "userRatingsTotal": 0, "location": {"lat": 0, "lng": 0}}
                     ]
                 },
                 {
                     "day": 2,
                     "places": [
-                        {"name": "Plaza Mayor", "photos": []},
-                        {"name": "Royal Palace", "photos": []}
+                        {"name": "Plaza Mayor", "photos": [], "rating": 0, "userRatingsTotal": 0, "location": {"lat": 0, "lng": 0}},
+                        {"name": "Royal Palace", "photos": [], "rating": 0, "userRatingsTotal": 0, "location": {"lat": 0, "lng": 0}}
                     ]
                 }
             ]
@@ -294,19 +303,30 @@ async function submitUserMessage(content: string) {
 
           async function fetchData() {
             try {
-              const [weather, transites, itinerario, flights, hotels, tours] =
-                await Promise.all([
-                  actionsWeather({ locationWeather, location }),
-                  actionsTransitArray({ cronograma, location }),
-                  actionsFotosArray({ cronograma }),
-                  actionsFlight({
-                    originLocationCode,
-                    destinationLocationCode,
-                    departureDate
-                  }),
-                  actionsHotel({ location }),
-                  actionsTours({ location })
-                ])
+              const results = await Promise.allSettled([
+                actionsWeather({ locationWeather, location }),
+                actionsTransitArray({ cronograma, location }),
+                actionsFotosArray({ cronograma, location }),
+                actionsFlight({
+                  originLocationCode,
+                  destinationLocationCode,
+                  departureDate
+                }),
+                actionsHotel({ location }),
+                actionsTours({ location })
+              ])
+              const weather =
+                results[0].status === 'fulfilled' ? results[0].value : undefined
+              const transites =
+                results[1].status === 'fulfilled' ? results[1].value : undefined
+              const itinerario =
+                results[2].status === 'fulfilled' ? results[2].value : undefined
+              const flights =
+                results[3].status === 'fulfilled' ? results[3].value : undefined
+              const hotels =
+                results[4].status === 'fulfilled' ? results[4].value : undefined
+              const tours =
+                results[5].status === 'fulfilled' ? results[5].value : undefined
 
               return { weather, transites, itinerario, flights, hotels, tours }
             } catch (error) {

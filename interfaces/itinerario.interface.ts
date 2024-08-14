@@ -1,6 +1,13 @@
+type Location = {
+  lat: number
+  lng: number
+}
 type Lugar = {
   nombre: string
   fotos: string[]
+  rating: number
+  userRatingsTotal: number
+  location: Location
 }
 
 type Dia = {

@@ -8,7 +8,7 @@ interface Props {
 export const Tours = ({ tours }: Props) => {
   return (
     <div className="flex flex-col w-[440px] px-2">
-      <h1 className={styles.title}>Tours cercanos</h1>
+      {tours && <h1 className={styles.title}>Tours cercanos</h1>}
       <div className="flex justify-between gap-2">
         {tours ? (
           tours.map((tour, index) => (
@@ -17,11 +17,11 @@ export const Tours = ({ tours }: Props) => {
             </div>
           ))
         ) : (
-          <div>
-            <p className="flex justify-center items-center w-[420px] h-[200px]">
-              No hemos encontrado tours para ti
-            </p>
-          </div>
+          <section>
+            <h1 className={styles.mensaje}>
+              Aún no tenemos información sobre tours en esta ciudad
+            </h1>
+          </section>
         )}
       </div>
     </div>

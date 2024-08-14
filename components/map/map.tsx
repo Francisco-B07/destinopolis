@@ -4,18 +4,18 @@ import { useState } from 'react'
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api'
 
 import { getPlacesMap } from '@/utils'
-import { Transites, Place } from '@/interfaces'
+import { Place, Itinerario } from '@/interfaces'
 import style from './map.module.css'
 import { useHotelStore } from '@/store/hotels/hotel-store'
+import { IconStar } from '@/icons'
 
 interface Props {
-  transites?: Transites[]
+  cronograma?: Itinerario
 }
 
-const MapComponent = ({ transites }: Props) => {
+const MapComponent = ({ cronograma }: Props) => {
   const hotel = useHotelStore(state => state.hotel)
   const [activeMarker, setActiveMarker] = useState('')
-  const placesMap: Place[] = transites ? getPlacesMap(transites) : []
 
   const handleActiveMarker = (marker: string) => {
     if (marker === activeMarker) {
@@ -32,8 +32,8 @@ const MapComponent = ({ transites }: Props) => {
   }
 
   const defaultMapCenter = {
-    lat: placesMap[0].location.lat,
-    lng: placesMap[0].location.lng
+    lat: cronograma ? cronograma[0].lugares[0].location.lat : -31.5346924,
+    lng: cronograma ? cronograma[0].lugares[0].location.lng : -68.5315393
   }
 
   const defaultMapOptions = {
@@ -53,22 +53,49 @@ const MapComponent = ({ transites }: Props) => {
         zoom={defaultMapZoom}
         options={defaultMapOptions}
       >
-        {transites &&
-          placesMap.map((place, index) => {
+        {cronograma &&
+          cronograma.map((place, index) => {
             return (
               <div key={index}>
                 <div>
-                  <Marker
-                    key={index}
-                    position={place.location}
-                    onClick={() => handleActiveMarker(place.name)}
-                  >
-                    {activeMarker === place.name && (
-                      <InfoWindow position={place.location}>
-                        <p className={style.info}>{place.name}</p>
-                      </InfoWindow>
-                    )}
-                  </Marker>
+                  {place.lugares.map((lugar, index) => {
+                    return (
+                      <div key={index}>
+                        <Marker
+                          key={index}
+                          position={lugar.location}
+                          onClick={() => handleActiveMarker(lugar.nombre)}
+                          icon={
+                            'http://maps.google.com/mapfiles/ms/icons/red.png'
+                          }
+                        >
+                          {activeMarker === lugar.nombre && (
+                            <InfoWindow position={lugar.location}>
+                              <div>
+                                <div className="flex justify-center w-full h-[100px] mb-2 relative">
+                                  <img
+                                    className="w-full h-full object-cover"
+                                    src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${lugar.fotos[0]}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}`}
+                                    alt=""
+                                  />
+                                  <p className={style.info}>{lugar.nombre}</p>
+                                </div>
+                                <div className="flex itmes-center mx-4 my-2">
+                                  <IconStar className="text-yellow-600 fill-yellow-600 size-5" />
+                                  <p className="text-yellow-600 text-sm ml-1 font-semibold ">
+                                    {lugar.rating}
+                                  </p>
+                                  <p className="text-black font-normal text-sm ml-6">
+                                    {lugar.userRatingsTotal} opiniones
+                                  </p>
+                                </div>
+                              </div>
+                            </InfoWindow>
+                          )}
+                        </Marker>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )
@@ -82,7 +109,9 @@ const MapComponent = ({ transites }: Props) => {
             >
               {activeMarker === hotel.name && (
                 <InfoWindow position={hotel.location}>
-                  <p className={style.info}>{hotel.name}</p>
+                  <p className="font-semibold text-lg text-black mx-4 mb-4">
+                    {hotel.name}
+                  </p>
                 </InfoWindow>
               )}
             </Marker>

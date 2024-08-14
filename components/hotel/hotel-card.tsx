@@ -1,31 +1,54 @@
 'use client'
-
+import style from './hotel.module.css'
 import imageHotel from '@/public/hotel.jpg'
 import Image from 'next/image'
+import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api'
+import { useState } from 'react'
+type Lugares = {
+  fotos: string[]
+  rating: number
+  userRatingsTotal: number
+  location: {
+    lat: number
+    lng: number
+  }
+  nombre: string
+}
 
 interface Props {
-  hotel: any
+  dia: {
+    día: number
+    lugares: Lugares[]
+  }
 }
-export const HotelCard = ({ hotel }: Props) => {
+export const HotelCard = ({ dia }: Props) => {
+  const [activeMarker, setActiveMarker] = useState('')
+  const handleActiveMarker = (marker: string) => {
+    if (marker === activeMarker) {
+      return
+    }
+    setActiveMarker(marker)
+  }
   return (
     <div>
-      <div className="max-w-2xl  mx-auto">
-        <div className="bg-[#dbdbdb] shadow-md rounded-lg max-w-sm ">
-          <Image
-            className="rounded-t-lg p-2"
-            src={imageHotel}
-            alt="flight"
-            width={500}
-            height={200}
-          />
-
-          <div className="px-4 pb-4 h-24">
-            <h3 className="flex justify-start items-center gap-1 mb-1 text-gray-900 font-semibold text-sm tracking-tight dark:text-white">
-              {hotel.name}
-            </h3>
+      {dia.lugares.map((lugar, index) => {
+        return (
+          <div key={index}>
+            <Marker
+              key={index}
+              position={lugar.location}
+              onClick={() => handleActiveMarker(lugar.nombre)}
+              icon={'http://maps.google.com/mapfiles/ms/icons/red.png'}
+            >
+              {activeMarker === lugar.nombre && (
+                <InfoWindow position={lugar.location}>
+                  <p className={style.info}>{lugar.nombre}</p>
+                </InfoWindow>
+              )}
+            </Marker>
           </div>
-        </div>
-      </div>
+        )
+      })}
     </div>
   )
 }
