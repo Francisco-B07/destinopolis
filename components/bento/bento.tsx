@@ -1,7 +1,7 @@
 'use client'
+import Image from 'next/image'
 import { createSwapy } from 'swapy'
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 
 import imagenCronograma from '@/public/cronograma.jpeg'
 import imagenVuelos from '@/public/vuelos.jpg'
@@ -20,10 +20,10 @@ import {
   Weather,
   Flights,
   Tours,
-  Home
+  Home,
+  Hotels
 } from '@/components/index'
-import type { Itinerario, Transites } from '@/interfaces'
-import { Hotels } from '../hotel/hotel'
+import type { Itinerario, Transites, ResHotel } from '@/interfaces'
 import { MapProvider } from '@/lib/providers/map-provider'
 import { MapComponent } from '../map/map'
 
@@ -32,7 +32,7 @@ interface Props {
   transites?: Transites[]
   itinerario?: Itinerario
   flights?: any[]
-  hotels?: any[]
+  hotels?: ResHotel[]
   tours?: any[]
   location: string
 }
@@ -155,11 +155,13 @@ const Bento = ({
         <div data-swapy-item="hospedaje">
           {visibleElements === 'hospedaje' ? (
             <div>
-              <Hotels hotels={hotels} />
+              <MapProvider>
+                <Hotels transites={transites} hotels={hotels} />
+              </MapProvider>
             </div>
           ) : (
             <div className={styles.containerPortadaRegurso}>
-              <h1 className={styles.tituloPortadaRegurso}>Hospedaje</h1>
+              <h1 className={styles.tituloPortadaRegurso}>Hoteles</h1>
               <Image
                 src={imagenHospedaje}
                 alt="hospedaje"
@@ -236,7 +238,7 @@ const Bento = ({
                 height={300}
                 className={styles.logo}
               />
-              <h1 className={styles.tituloLogo}>Destinopolis</h1>
+              <h1 className={styles.tituloPortadaRegurso}>Destinopolis</h1>
             </div>
           )}
         </div>

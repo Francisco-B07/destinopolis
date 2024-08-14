@@ -71,7 +71,7 @@
     -1px 1px 0 #000,
     1px 1px 0 #000;
 
-  --tw-backdrop-blur: blur(20px) !important;
+  --tw-backdrop-blur: blur(1px) !important;
   backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
     var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
     var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
@@ -88,8 +88,9 @@
   object-fit: cover;
 }
 .logo {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
+  margin-top: -30px;
 }
 
 .tituloLogo {

@@ -6,12 +6,14 @@ import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api'
 import { getPlacesMap } from '@/utils'
 import { Transites, Place } from '@/interfaces'
 import style from './map.module.css'
+import { useHotelStore } from '@/store/hotels/hotel-store'
 
 interface Props {
   transites?: Transites[]
 }
 
 const MapComponent = ({ transites }: Props) => {
+  const hotel = useHotelStore(state => state.hotel)
   const [activeMarker, setActiveMarker] = useState('')
   const placesMap: Place[] = transites ? getPlacesMap(transites) : []
 
@@ -71,6 +73,21 @@ const MapComponent = ({ transites }: Props) => {
               </div>
             )
           })}
+        {hotel && (
+          <div>
+            <Marker
+              position={hotel.location}
+              onClick={() => handleActiveMarker(hotel.name)}
+              icon={'http://maps.google.com/mapfiles/ms/icons/blue.png'}
+            >
+              {activeMarker === hotel.name && (
+                <InfoWindow position={hotel.location}>
+                  <p className={style.info}>{hotel.name}</p>
+                </InfoWindow>
+              )}
+            </Marker>
+          </div>
+        )}
       </GoogleMap>
     </div>
   )

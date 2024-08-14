@@ -1,5 +1,7 @@
 'use server'
 
+import { ResHotel } from '@/interfaces'
+
 interface Props {
   location: string
 }
@@ -38,10 +40,14 @@ export async function actionsHotel({ location }: Props) {
   })
 
   const { data } = await response.json()
-  const hotels = []
-  hotels.push(data[0])
-  hotels.push(data[1])
-  hotels.push(data[2])
+  const hotels: ResHotel[] = limitArraySize(data, 100)
 
   return hotels
+}
+
+function limitArraySize<T>(arr: T[], maxSize: number = 30): T[] {
+  if (arr.length > maxSize) {
+    return arr.slice(0, maxSize)
+  }
+  return arr
 }
