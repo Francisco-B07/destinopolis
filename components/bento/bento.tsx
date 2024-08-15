@@ -23,7 +23,7 @@ import {
   Home,
   Hotels
 } from '@/components/index'
-import type { Itinerario, Transites, ResHotel } from '@/interfaces'
+import type { Itinerario, Transites, ResHotel, Hotel } from '@/interfaces'
 import { MapProvider } from '@/lib/providers/map-provider'
 import { MapComponent } from '../map/map'
 
@@ -32,7 +32,7 @@ interface Props {
   transites?: Transites[]
   itinerario?: Itinerario
   flights?: any[]
-  hotels?: ResHotel[]
+  hotels?: Hotel[]
   tours?: any[]
   location: string
 }

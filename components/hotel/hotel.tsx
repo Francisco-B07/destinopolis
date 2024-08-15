@@ -27,7 +27,7 @@ export const Hotels = ({ cronograma, hotels }: Props) => {
 
   const defaultMapContainerStyle = {
     width: '405px',
-    height: '290px',
+    height: '330px',
     borderRadius: '15px',
     margin: '5px 20px'
   }
@@ -54,7 +54,7 @@ export const Hotels = ({ cronograma, hotels }: Props) => {
   return (
     <div className="w-full">
       <div className="flex flex-col">
-        <h1 className={style.title}>Hoteles en la ciudad</h1>
+        {/* <h1 className={style.title}>Hoteles en la ciudad</h1> */}
         <div className="flex justify-around">
           <div className="flex h-6 gap-1">
             <img
