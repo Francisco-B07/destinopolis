@@ -1,12 +1,12 @@
 import { create } from 'zustand'
-import { Place } from '@/interfaces'
+import { Hotel, Place } from '@/interfaces'
 
 interface HotelState {
-  hotel: Place
-  setHotel: (hotel: Place) => void
+  hotel: Hotel
+  setHotel: (hotel: Hotel) => void
 }
 
 export const useHotelStore = create<HotelState>()(set => ({
-  hotel: {} as Place,
+  hotel: {} as Hotel,
   setHotel: hotel => set({ hotel })
 }))

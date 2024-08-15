@@ -15,8 +15,6 @@ export async function actionsFotosArray({ cronograma, location }: Props) {
       const data = await actionsFoto({ lugar: lugar.nombre, location })
       if (data?.photos.length === 0) continue
       for (const foto of data?.photos) {
-        // console.log('foto', foto.photo_reference)
-
         lugar.fotos?.push(foto.photo_reference)
       }
       lugar.rating = data?.placeRating
@@ -24,8 +22,6 @@ export async function actionsFotosArray({ cronograma, location }: Props) {
       lugar.location = data?.placeLocation
     }
   }
-
-  console.log('cronograma', cronograma)
 
   return cronograma
 }

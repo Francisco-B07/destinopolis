@@ -3,14 +3,14 @@
 import { useState } from 'react'
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api'
 
-import { Place, ResHotel, Itinerario } from '@/interfaces'
+import { Place, ResHotel, Itinerario, Hotel } from '@/interfaces'
 import style from './hotel.module.css'
 import { useHotelStore } from '@/store/hotels/hotel-store'
 import { IconStar } from '@/icons'
 
 interface Props {
   cronograma?: Itinerario
-  hotels?: ResHotel[]
+  hotels?: Hotel[]
 }
 
 export const Hotels = ({ cronograma, hotels }: Props) => {
@@ -46,15 +46,8 @@ export const Hotels = ({ cronograma, hotels }: Props) => {
 
   const defaultMapZoom = 10
 
-  const addHotel = (hotel: ResHotel) => {
-    const newPlace: Place = {
-      name: hotel.name,
-      location: {
-        lat: hotel.geoCode.latitude,
-        lng: hotel.geoCode.longitude
-      }
-    }
-    setHotel(newPlace)
+  const addHotel = (hotel: Hotel) => {
+    setHotel(hotel)
     setHotelAdded(hotel.name)
   }
 
@@ -139,24 +132,29 @@ export const Hotels = ({ cronograma, hotels }: Props) => {
                 <div>
                   <Marker
                     key={index}
-                    position={{
-                      lat: hotel.geoCode.latitude,
-                      lng: hotel.geoCode.longitude
-                    }}
+                    position={hotel.location}
                     onClick={() => handleActiveMarker(hotel.name)}
                     icon={'http://maps.google.com/mapfiles/ms/icons/blue.png'}
                   >
                     {activeMarker === hotel.name && (
-                      <InfoWindow
-                        position={{
-                          lat: hotel.geoCode.latitude,
-                          lng: hotel.geoCode.longitude
-                        }}
-                      >
+                      <InfoWindow position={hotel.location}>
                         <div>
-                          <p className="font-semibold text-lg text-black mx-4">
-                            {hotel.name}
-                          </p>
+                          <div className="flex justify-center w-full h-[100px] mb-2 relative">
+                            <img
+                              src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${hotel.photos[0]}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}`}
+                              alt=""
+                            />
+                            <p className={style.info}>{hotel.name}</p>
+                          </div>
+                          <div className="flex itmes-center mx-4 my-2">
+                            <IconStar className="text-yellow-600 fill-yellow-600 size-5" />
+                            <p className="text-yellow-600 text-sm ml-1 font-semibold ">
+                              {hotel.rating}
+                            </p>
+                            <p className="text-black font-normal text-sm ml-6">
+                              {hotel.userRatingsTotal} opiniones
+                            </p>
+                          </div>
                           <button
                             onClick={() => addHotel(hotel)}
                             className="mt-2 text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2 text-center  "

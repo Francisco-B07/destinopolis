@@ -17,3 +17,14 @@ export interface ResHotel {
   lastUpdate: string // Consider using Date if you're handling date objects
   name: string
 }
+
+export interface Hotel {
+  name: string
+  photos: string[]
+  location: {
+    lat: number
+    lng: number
+  }
+  rating: number
+  userRatingsTotal: number
+}

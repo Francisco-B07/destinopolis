@@ -109,9 +109,24 @@ const MapComponent = ({ cronograma }: Props) => {
             >
               {activeMarker === hotel.name && (
                 <InfoWindow position={hotel.location}>
-                  <p className="font-semibold text-lg text-black mx-4 mb-4">
-                    {hotel.name}
-                  </p>
+                  <div>
+                    <div className="flex justify-center w-full h-[100px] mb-2 relative">
+                      <img
+                        src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${hotel.photos[0]}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}`}
+                        alt=""
+                      />
+                      <p className={style.info}>{hotel.name}</p>
+                    </div>
+                    <div className="flex itmes-center mx-4 my-2">
+                      <IconStar className="text-yellow-600 fill-yellow-600 size-5" />
+                      <p className="text-yellow-600 text-sm ml-1 font-semibold ">
+                        {hotel.rating}
+                      </p>
+                      <p className="text-black font-normal text-sm ml-6">
+                        {hotel.userRatingsTotal} opiniones
+                      </p>
+                    </div>
+                  </div>
                 </InfoWindow>
               )}
             </Marker>

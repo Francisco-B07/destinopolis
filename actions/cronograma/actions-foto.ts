@@ -6,8 +6,6 @@ interface Props {
 }
 
 export async function actionsFoto({ lugar, location }: Props) {
-  console.log('lugar', lugar)
-
   const URL_TEXT_SEARCH = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(lugar)}&location=${location}&radius=250000&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}`
   const responseTextSearch = await fetch(URL_TEXT_SEARCH)
   const dataTextSearch = await responseTextSearch.json()
