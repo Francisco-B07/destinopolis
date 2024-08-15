@@ -54,12 +54,12 @@ export function EmptyScreen() {
               clipRule="evenodd"
             ></path>
           </svg>
-          <div>
+          {/* <div>
             <span className="font-medium">¡Alerta!</span> La solicitud puede
             fallar si supera el tiempo máximo permitido por nuestro servicio de
             alojamiento. Genera un viaje de pocos días para asegurar que el
             servicio pueda procesar tu solicitud correctamente.
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

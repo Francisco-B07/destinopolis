@@ -87,7 +87,7 @@ export function PromptForm({
           ref={inputRef}
           tabIndex={0}
           onKeyDown={onKeyDown}
-          placeholder="Qué visitar en Londres en 3 días saliendo desde Buenos Aires."
+          placeholder="Qué visitar en Londres en 5 días saliendo desde Buenos Aires el 12 de septiembre de 2024."
           className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
           autoFocus
           spellCheck={false}
