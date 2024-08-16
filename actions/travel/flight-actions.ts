@@ -31,13 +31,6 @@ export async function actionsFlight({
   destinationLocationCode,
   departureDate
 }: Props) {
-  console.log(
-    'actionsFlight',
-    originLocationCode,
-    destinationLocationCode,
-    departureDate
-  )
-
   const token = await getAccessToken()
 
   const url = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=1&max=3`
@@ -72,7 +65,6 @@ export async function actionsFlightPrice({ flight }: { flight: any }) {
   })
 
   const data = await response.json()
-  console.log('vuelvos', data)
 
   return data
 }

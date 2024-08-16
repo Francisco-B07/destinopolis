@@ -10,8 +10,6 @@ interface Props {
 export const Slider = async ({ photos }: Props) => {
   const [currentSlide, setCurrentSlide] = useState('')
 
-  console.log('slider', photos)
-
   const slider = document.querySelector('#slider')
 
   slider?.addEventListener('click', e => {
@@ -23,7 +21,6 @@ export const Slider = async ({ photos }: Props) => {
 
     if (buttonElement) {
       const index = buttonElement.dataset.slide
-      console.log(index)
 
       // index && setCurrentSlide(index)
       glide.go(`=${index}`)

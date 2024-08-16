@@ -29,17 +29,78 @@ export function EmptyScreen() {
         </p>
         <div className="flex flex-col gap-2 mt-4 mb-4">
           <div className="flex justify-around mb-4">
-            <CustomBadge>Lugares Turisticos</CustomBadge>
-            <CustomBadge>Vuelos económicos</CustomBadge>
-            <CustomBadge>Hoteles</CustomBadge>
+            <p
+              style={{
+                fontSize: '1.2em',
+                fontWeight: 'bold',
+                color: 'white',
+                textShadow:
+                  '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+              }}
+            >
+              Lugares Turisticos
+            </p>
+
+            <p
+              style={{
+                fontSize: '1.2em',
+                fontWeight: 'bold',
+                color: 'white',
+                textShadow:
+                  '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+              }}
+            >
+              Vuelos económicos
+            </p>
+            <p
+              style={{
+                fontSize: '1.2em',
+                fontWeight: 'bold',
+                color: 'white',
+                textShadow:
+                  '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+              }}
+            >
+              Hoteles
+            </p>
           </div>
           <div className="flex justify-around">
-            <CustomBadge>Clima</CustomBadge>
-            <CustomBadge>Tours adicionales</CustomBadge>
-            <CustomBadge>Transporte público</CustomBadge>
+            <p
+              style={{
+                fontSize: '1.2em',
+                fontWeight: 'bold',
+                color: 'white',
+                textShadow:
+                  '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+              }}
+            >
+              Clima
+            </p>
+            <p
+              style={{
+                fontSize: '1.2em',
+                fontWeight: 'bold',
+                color: 'white',
+                textShadow:
+                  '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+              }}
+            >
+              Tours adicionales
+            </p>
+            <p
+              style={{
+                fontSize: '1.2em',
+                fontWeight: 'bold',
+                color: 'white',
+                textShadow:
+                  '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'
+              }}
+            >
+              Transporte público
+            </p>
           </div>
         </div>
-        <div
+        {/* <div
           className="flex bg-yellow-100 rounded-lg p-4 mt-20 text-sm text-yellow-700"
           role="alert"
         >
@@ -54,13 +115,13 @@ export function EmptyScreen() {
               clipRule="evenodd"
             ></path>
           </svg>
-          {/* <div>
+          <div>
             <span className="font-medium">¡Alerta!</span> La solicitud puede
             fallar si supera el tiempo máximo permitido por nuestro servicio de
             alojamiento. Genera un viaje de pocos días para asegurar que el
             servicio pueda procesar tu solicitud correctamente.
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </div>
     </div>
   )
