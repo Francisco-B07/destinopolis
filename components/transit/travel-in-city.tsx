@@ -13,7 +13,7 @@ export const TravelInCity = ({ transites = [] }: Props) => {
     transites && transites[0] ? transites[0].destination : null
   )
   const [startTour, setStartTour] = useState(
-    transites && transites[0] ? transites[0].destination : null
+    transites && transites[0] ? transites[0].origin : null
   )
   const [currentDia, setCurrentDia] = useState(1)
 
