@@ -119,7 +119,7 @@ export const Cronograma = ({ cronograma = [] }: Props) => {
                     <img
                       className={styles.photoSlider}
                       src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}`}
-                      alt="Foto de la Estatua de la Libertad"
+                      alt=""
                     />
                     {/* <img src={photo} alt="" className={styles.photoSlider} /> */}
                   </button>

@@ -224,7 +224,7 @@ async function submitUserMessage(content: string) {
               `
           ),
           departureDate: z.string().describe(
-            `El usuario indicará la fecha de partida de su viaje. Debes obtener la fecha de partida única para el viaje. Si el usuario no indica ninguna fecha, toma como fecha de partida el 23 de agosto de 2024. Las fechas se especifican en el formato ISO 8601 (AAAA-MM-DD), por ejemplo, 2017-12-25.
+            `El usuario indicará la fecha de partida de su viaje. Debes obtener la fecha de partida única para el viaje. Si el usuario no indica ninguna fecha, toma como fecha de partida el 12 de septiembre de 2024. Las fechas se especifican en el formato ISO 8601 (AAAA-MM-DD), por ejemplo, 2017-12-25.
             `
           ),
 

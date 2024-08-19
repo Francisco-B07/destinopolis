@@ -22,11 +22,9 @@ export function EmptyScreen() {
         <p className="leading-normal text-muted-foreground mt-2">
           Nuestra plataforma utiliza inteligencia artificial para crear
           itinerarios personalizados y optimizar tu experiencia de viaje.
+          Descubre:
         </p>
 
-        <p className="leading-normal font-semibold mt-6">
-          Podrás encontrar información sobre:
-        </p>
         <div className="flex flex-col gap-2 mt-4 mb-4">
           <div className="flex justify-around mb-4">
             <p

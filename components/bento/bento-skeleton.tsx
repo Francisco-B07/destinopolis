@@ -1,7 +1,7 @@
 import { SpinnerMessage } from '@/components/stocks/message'
 const BentoSkeleton = () => {
   return (
-    <div className="flex flex-col gap-2 mt-2">
+    <div className="flex flex-col gap-2 ">
       <div className="flex gap-1 mb-1  rounded-md">
         <SpinnerMessage />
         <p className="font-semibold text-base text-gray-400 mt-2 ">
