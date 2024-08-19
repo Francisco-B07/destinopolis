@@ -2,10 +2,10 @@ import { SpinnerMessage } from '@/components/stocks/message'
 const BentoSkeleton = () => {
   return (
     <div className="flex flex-col gap-2 mt-2">
-      <div className="flex gap-1 mb-1  p-2 rounded-md">
+      <div className="flex gap-1 mb-1  rounded-md">
         <SpinnerMessage />
-        <p className="font-semibold">
-          Estamos generando información para tu viaje...
+        <p className="font-semibold text-base text-gray-400 mt-2 ">
+          Estamos generando información para tu viaje . . .
         </p>
       </div>
       <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 text-green-400">

@@ -43,10 +43,20 @@ import {
   actionsWeather
 } from '@/actions'
 import { actionsTransitArray } from '@/actions/transit/actions-transit-array'
-import { Transites } from '@/interfaces'
+import { Hotel, Itinerario, Transites } from '@/interfaces'
 import BentoSkeleton from '@/components/bento/bento-skeleton'
 
 export const maxDuration = 300
+
+interface Props {
+  weather?: any
+  transites?: Transites[]
+  itinerario?: Itinerario
+  flights?: any[]
+  hotels?: Hotel[]
+  tours?: any[]
+  location: string
+}
 
 async function confirmPurchase(symbol: string, price: number, amount: number) {
   'use server'
@@ -376,7 +386,15 @@ async function submitUserMessage(content: string) {
                     type: 'tool-result',
                     toolName: 'list_locations',
                     toolCallId,
-                    result: location
+                    result: {
+                      weather,
+                      itinerario,
+                      transites,
+                      hotels,
+                      tours,
+                      flights,
+                      location
+                    }
                   }
                 ]
               }
@@ -384,15 +402,17 @@ async function submitUserMessage(content: string) {
           })
 
           return (
-            <Bento
-              weather={weather}
-              itinerario={itinerario}
-              transites={transites}
-              flights={flights}
-              hotels={hotels}
-              tours={tours}
-              location={location}
-            />
+            <BotCard>
+              <Bento
+                weather={weather}
+                itinerario={itinerario}
+                transites={transites}
+                flights={flights}
+                hotels={hotels}
+                tours={tours}
+                location={location}
+              />
+            </BotCard>
           )
         }
       }
@@ -477,28 +497,35 @@ export const getUIStateFromAIState = (aiState: Chat) => {
       display:
         message.role === 'tool' ? (
           message.content.map(tool => {
-            return tool.toolName === 'listStocks' ? (
+            return tool.toolName === 'list_locations' ? (
               <BotCard>
-                {/* TODO: Infer types based on the tool result*/}
-                {/* @ts-expect-error */}
-                <Stocks props={tool.result} />
+                <Bento
+                  weather={(tool.result as Props).weather}
+                  itinerario={(tool.result as Props).itinerario}
+                  transites={(tool.result as Props).transites}
+                  flights={(tool.result as Props).flights}
+                  hotels={(tool.result as Props).hotels}
+                  tours={(tool.result as Props).tours}
+                  location={(tool.result as Props).location}
+                />
               </BotCard>
-            ) : tool.toolName === 'showStockPrice' ? (
-              <BotCard>
-                {/* @ts-expect-error */}
-                <Stock props={tool.result} />
-              </BotCard>
-            ) : tool.toolName === 'showStockPurchase' ? (
-              <BotCard>
-                {/* @ts-expect-error */}
-                <Purchase props={tool.result} />
-              </BotCard>
-            ) : tool.toolName === 'getEvents' ? (
-              <BotCard>
-                {/* @ts-expect-error */}
-                <Events props={tool.result} />
-              </BotCard>
-            ) : null
+            ) : // tool.toolName === 'showStockPrice' ? (
+            //   <BotCard>
+            //     {/* @ts-expect-error */}
+            //     <Stock props={tool.result} />
+            //   </BotCard>
+            // ) : tool.toolName === 'showStockPurchase' ? (
+            //   <BotCard>
+            //     {/* @ts-expect-error */}
+            //     <Purchase props={tool.result} />
+            //   </BotCard>
+            // ) : tool.toolName === 'getEvents' ? (
+            //   <BotCard>
+            //     {/* @ts-expect-error */}
+            //     <Events props={tool.result} />
+            //   </BotCard>
+            // ) :
+            null
           })
         ) : message.role === 'user' ? (
           <UserMessage>{message.content as string}</UserMessage>

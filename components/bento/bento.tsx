@@ -36,6 +36,7 @@ interface Props {
   tours?: any[]
   location: string
 }
+
 const Bento = ({
   weather,
   itinerario,
