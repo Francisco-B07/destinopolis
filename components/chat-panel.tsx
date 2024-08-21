@@ -83,9 +83,7 @@ export function ChatPanel({
                 }}
               >
                 <CustomBadge>
-                  <div className="text-sm hover:text-base ">
-                    {example.heading}{' '}
-                  </div>
+                  <div className="text-sm  ">{example.heading} </div>
                 </CustomBadge>
               </div>
             ))}
