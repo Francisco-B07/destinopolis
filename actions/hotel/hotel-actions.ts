@@ -8,7 +8,7 @@ interface Props {
 
 async function getAccessToken() {
   const response = await fetch(
-    'https://test.api.amadeus.com/v1/security/oauth2/token',
+    'https://api.amadeus.com/v1/security/oauth2/token',
     {
       method: 'POST',
       headers: {
@@ -30,7 +30,7 @@ export async function actionsHotel({ location }: Props) {
   const token = await getAccessToken()
   const latlng = location.split(',')
 
-  const url = `https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=${latlng[0]}&longitude=${latlng[1]}`
+  const url = `https://api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=${latlng[0]}&longitude=${latlng[1]}`
 
   const response = await fetch(url, {
     method: 'GET',
