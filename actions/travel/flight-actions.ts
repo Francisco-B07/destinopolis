@@ -8,7 +8,7 @@ interface Props {
 
 async function getAccessToken() {
   const response = await fetch(
-    'https://api.amadeus.com/v1/security/oauth2/token',
+    'https://test.api.amadeus.com/v1/security/oauth2/token',
     {
       method: 'POST',
       headers: {
@@ -33,7 +33,7 @@ export async function actionsFlight({
 }: Props) {
   const token = await getAccessToken()
 
-  const url = `https://api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=1&max=3`
+  const url = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=1&max=3`
 
   const response = await fetch(url, {
     method: 'GET',
@@ -50,7 +50,7 @@ export async function actionsFlight({
 export async function actionsFlightPrice({ flight }: { flight: any }) {
   const token = await getAccessToken()
 
-  const url = `https://api.amadeus.com/v2/shopping/flight-offers/pricing`
+  const url = `https://test.api.amadeus.com/v2/shopping/flight-offers/pricing`
 
   const response = await fetch(url, {
     method: 'POST',
